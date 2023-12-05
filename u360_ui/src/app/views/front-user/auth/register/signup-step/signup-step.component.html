@@ -1,0 +1,668 @@
+<!-- body  -->
+<div class="login-section" style="background-image:url(./assets/images/login-bg-banner.jpg);">
+    <div class="container">
+        <div class="container_inner_box">
+            <div class="login-box">
+                <div class="logo">
+                    <img src="./assets/images/big-logo.png" alt="">
+                </div>
+            </div>
+            <div class="form-box signup-2" [hidden]="!personalDetailsStep">
+                <div class="better-experience">
+                    <div class="inner-top">
+                        <h4>We’d love to get to know you better</h4>
+                        <h6>Personalise your experience</h6>
+                    </div>
+                    <form [formGroup]="personalDetails">
+                        <div class="input-group">
+                            <input cFormControl type="text" class="form-control" placeholder="Name"
+                                formControlName="name"
+                                [ngClass]="{ 'is-invalid': personal_step && personal['name'].errors }" />
+                            <div *ngIf="personal['name'].errors" class="text-danger">
+                                <div *ngIf="personal_step && personal['name'].errors['required']">Name is required
+                                </div>
+                                <div *ngIf="personal_step && personal['name'].errors['maxlength']">Maximum 35 characters are allowed.
+                                </div>
+                                <div *ngIf="personal_step && personal['name'].errors['pattern']">Please enter only alphabets.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="input-group date">
+                                    <!-- <input type="text" id="dob" class="form-control" placeholder="Date of Birth"
+                                    cFormControl formControlName="dob" [maxDate]="maxDate" [ngClass]="{ 'is-invalid': personal_step && personal['dob'].errors }" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" (change)="changeDOB($event)"
+                                    > -->
+                                    <!-- <input type="date" cFormControl formControlName="dob" class="form-control calendar" id="dob"
+                                        placeholder="Date of Birth"
+                                        [ngClass]="{ 'is-invalid': personal_step && personal['dob'].errors }"> -->
+                                    <input type="text" class="form-control dob"      formControlName="dob" [ngClass]="{ 'is-invalid': personal_step && personal['dob'].errors }"
+                                        placeholder="DOB">
+                                    <span class="input-group-append">
+                                        <span class="input-group-text calendar-icon">
+                                            <img src="./assets/images/calendar-icon.png" alt="">
+                                        </span>
+                                    </span>
+                                    <div *ngIf="personal_step && personal['dob'].errors" class="text-danger">
+                                        <div *ngIf="personal['dob'].errors['required']">DOB is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="input-group">
+                                    <input cFormControl type="text" formControlName="location"
+                                        class="form-control location"
+                                        [ngClass]="{ 'is-invalid': personal_step && personal['location'].errors }"
+                                        placeholder="Location">
+                                    <span class="input-group-text location-icon">
+                                        <img src="./assets/images/Location-icon.png" alt="">
+                                    </span>
+                                    <div *ngIf="personal_step && personal['location'].errors" class="text-danger">
+                                        <div *ngIf="personal['location'].errors['required']">Location is required
+                                        </div>
+                                        <div *ngIf="personal['location'].errors['maxlength']">Maximum 55 characters are allowed.
+                                        </div>
+                                        <div *ngIf="personal['location'].errors['pattern']">Please enter only alphabets, numerals and special characters.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-12">
+                                <div class="input-group">
+                                    <select #countryPhoneCode type="text" cFormControl formControlName="phone_code" class="form-control counter-phone" [ngClass]="{ 'is-invalid': personal_step && personal['phone_code'].errors }">
+                                        <option value="">Select code</option>
+                                        <option *ngFor="let country of countryList" [value]="country.phone">
+                                            +{{country.phone}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="personal_step && personal['phone_code'].errors" class="text-danger">
+                                        <div *ngIf="personal['phone_code'].errors['required']">Phone code is
+                                            required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-12">
+                                <div class="input-group">
+                                    <input cFormControl type="number" formControlName="contact_number" class="form-control"
+                                        [ngClass]="{ 'is-invalid': personal_step && personal['contact_number'].errors }"
+                                        placeholder="Contanct Number" />
+                                    <div *ngIf="personal_step && personal['contact_number'].errors" class="text-danger">
+                                        <div *ngIf="personal['contact_number'].errors['required']">Contact Number is
+                                            required
+                                        </div>
+                                        <div
+                                            *ngIf="personal['contact_number'].errors['pattern']">
+                                            Please enter minimum 6 and maximum 11 number
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input cFormControl type="text" formControlName="email" class="form-control"
+                                [ngClass]="{ 'is-invalid': personal_step && personal['email'].errors }" placeholder="Email" [readonly]="true" />
+                            <div *ngIf="personal_step && personal['email'].errors" class="text-danger">
+                                <div *ngIf="personal['email'].errors['required']">Email is required</div>
+                                <div *ngIf="personal['email'].errors && personal['email'].errors['email']">
+                                    Email is invalid</div>
+                            </div>
+                        </div>
+                        <div class="kind-sponsor">
+                            <h6>Which kind of sponsor are you?
+
+                             </h6>
+                            <div class="kind-radio-btn">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" cFormCheckInput [value]="1"
+                                        [checked]="personalDetails.value.sponsor_type === '1'"
+                                        formControlName="sponsor_type"
+                                        [ngClass]="{ 'is-invalid': personal_step && personal['sponsor_type'].errors }"
+                                        id="lndividual-sponsor">
+                                    <label class="form-check-label" for="lndividual-sponsor">
+                                        lndividual sponsor  <span data-bs-toggle="tooltip" ngbTooltip="Individual User: 'I am interested in sponsoring or volunteering in my personal capacity.'
+                                        "><i class="fas fa-info-circle"></i></span>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" cFormCheckInput [value]="2"
+                                        [checked]="personalDetails.value.sponsor_type === '2'"
+                                        formControlName="sponsor_type"
+                                        [ngClass]="{ 'is-invalid': personal_step && personal['sponsor_type'].errors }"
+                                        id="Corporate-sponsor" />
+                                    <label class="form-check-label" for="Corporate-sponsor">
+                                        Corporate sponsor <span data-bs-toggle="tooltip" ngbTooltip="Corporate User: 'I am interested in sponsoring or volunteering on behalf of my company.'"><i class="fas fa-info-circle"></i></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div *ngIf="personal_step && personal['sponsor_type'].errors" class="text-danger">
+                                <div *ngIf="personal['sponsor_type'].errors['required']">Please check sponsor type
+                                </div>
+                            </div>
+                        </div>
+                        <div class="term-condtions">
+                            <div class="form-check">
+                                <div class="check_input_box">
+                                    <input class="form-check-input" type="checkbox" value="" cFormCheckInput
+                                    formControlName="terms_condition"
+                                    [ngClass]="{ 'is-invalid': personal_step && personal['terms_condition'].errors }"
+                                    id="termsFlexCheckChecked" (change)="onTermCheckboxChange($event)" />
+                                    <label class="form-check-label" for="termsFlexCheckChecked">
+                                        I have read the <strong>Term and Condtions</strong>
+                                    </label>
+                                </div>
+                                
+                                <div *ngIf="personal_step && personal['terms_condition'].errors"
+                                    class="text-danger">
+                                    <div *ngIf="personal['terms_condition'].errors['required']">Please check terms
+                                        and Condition</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <ul>
+                                <li>
+                                    <input (click)="next()" type="button" name="next" class="btn btn-green"
+                                        value="Next" />
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <fieldset *ngIf="step == 2">
+                <div class="form-box signup-2">
+                    <div class="better-experience">
+                        <div class="inner-top">
+                            <h4>We’d love to get to know you better</h4>
+                            <h6>Personalise your experience</h6>
+                        </div>
+
+                        <form [formGroup]="corporatDetails">
+                            <div class="input-group">
+                                <input cFormControl type="text" formControlName="corporation_name" class="form-control"
+                                    [ngClass]="{ 'is-invalid': corporat_step && corporation['corporation_name'].errors }"
+                                    placeholder="Name of Corporation" />
+                                <div *ngIf="corporat_step &&  corporation['corporation_name'].errors"
+                                    class="text-danger">
+                                    <div *ngIf="corporation['corporation_name'].errors['required']">Corporation name is
+                                        required</div>
+                                    <div *ngIf="corporation['corporation_name'].errors['maxlength']">Maximum 100 characters are allowed.
+                                        </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-group">
+                                <input cFormControl type="text" formControlName="industry" class="form-control"
+                                    [ngClass]="{ 'is-invalid': corporat_step && corporation['industry'].errors }"
+                                    placeholder="Name of Industry" />
+                                <div *ngIf="corporat_step &&  corporation['industry'].errors" class="text-danger">
+                                    <div *ngIf="corporation['industry'].errors['required']">Industry name is required
+                                    </div>
+                                    <div *ngIf="corporation['industry'].errors['maxlength']">Maximum 100 characters are allowed.
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="input-group">
+                                <select formControlName="industry" 
+                                    class="form-control form-select-design cursor-pointer" cSelect (change)="checkOtherIndustry($event)">
+                                    <option selected="selected" value="">Please choose Industry</option>
+                                    <option *ngFor="let industry of industryList" [value]="industry.id">{{
+                                        industry.name }}</option>
+                                    <option value="other">Other: Please Specify</option>
+                                </select>
+                                <div *ngIf="corporat_step && corporation['industry'].errors"
+                                    class="text-danger">
+                                    <div *ngIf="corporation['industry'].errors['required']">Industry is required</div>
+                                </div>
+                            </div>
+                            <div class="input-group" [hidden]="!isOtherIndustry">
+                                <input cFormControl type="text" formControlName="other_industry" class="form-control"
+                                    [ngClass]="{ 'is-invalid': corporat_step && corporation['other_industry'].errors }"
+                                    placeholder="Name of Industry" />
+                                <div *ngIf="corporat_step &&  corporation['other_industry'].errors"
+                                    class="text-danger">
+                                    <div *ngIf="corporation['other_industry'].errors['required']">Industry name is
+                                        required</div>
+                                    <div *ngIf="corporation['other_industry'].errors['maxlength']">Maximum 100 characters are allowed.
+                                        </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-group">
+                                    <select class="form-control">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div> -->
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="input-group">
+                                        <input cFormControl type="text" formControlName="city" class="form-control"
+                                            [ngClass]="{ 'is-invalid': corporat_step && corporation['city'].errors }"
+                                            placeholder="City" (input)="capitalizeFirstLetter($event)"/>
+                                        <div *ngIf="corporat_step && corporation['city'].errors" class="text-danger">
+                                            <div *ngIf="corporation['city'].errors['required']">City is required
+                                            </div>
+                                            <div *ngIf="corporation['city'].errors['maxlength']">Maximum 50 characters are allowed.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="input-group">
+                                        <input cFormControl type="text" formControlName="country" class="form-control"
+                                            [ngClass]="{ 'is-invalid': corporat_step && corporation['country'].errors }"
+                                            placeholder="Country" (input)="capitalizeFirstLetter($event)"/>
+                                        <div *ngIf="corporat_step && corporation['country'].errors" class="text-danger">
+                                            <div *ngIf="corporation['country'].errors['required']">Country is required</div>
+                                            <div *ngIf="corporation['country'].errors['maxlength']">Maximum 50 characters are allowed.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <input cFormControl type="text" formControlName="contact_name" class="form-control"
+                                    [ngClass]="{ 'is-invalid': corporat_step && corporation['contact_name'].errors }"
+                                    placeholder="Contact Name" />
+                                <div *ngIf="corporat_step && corporation['contact_name'].errors" class="text-danger">
+                                    <div *ngIf="corporation['contact_name'].errors['required']">Contact Name is required
+                                    </div>
+                                    <div *ngIf="corporation['contact_name'].errors['maxlength']">Maximum 50 characters are allowed.
+                                    </div>
+                                    <div *ngIf="corporation['contact_name'].errors['pattern']">
+                                        Only letters are allowed
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <input cFormControl type="text" formControlName="position" class="form-control"
+                                    [ngClass]="{ 'is-invalid': corporat_step && corporation['position'].errors }"
+                                    placeholder="Position" />
+                                <div *ngIf="corporat_step && corporation['position'].errors" class="text-danger">
+                                    <div *ngIf="corporation['position'].errors['required']">Position is required</div>
+                                    <div *ngIf="corporation['position'].errors['maxlength']">Maximum 30 characters are allowed.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <ul>
+                                    <li>
+                                        <input (click)="next()" type="button" name="next" class="btn btn-green"
+                                            value="Next" />
+                                    </li>
+                                    <li>
+                                        <input (click)="previous()" type="button" name="previous" class="btn btn-outline-green"
+                                            value="Back" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset *ngIf="step == 3">
+                <div class="personalise-experience">
+                    <div class="white-box">
+                        <form [formGroup]="sdgDetails">
+                            <div class="personalise-inner-box">
+
+                                <div class="personalise-experience-left">
+                                    <div class="title">
+                                        <h4>We’d love <br> to get to know you better</h4>
+                                        <strong>Personalise your experience</strong>
+                                    </div>
+                                    <div class="description">
+                                        <p>Which Sustainable Development Goals (or SDG’s) do you connect with the most?
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="personalise-experience-right">
+                                    <div class="check_circle-row">
+                                        <div class="check_circle-item" *ngFor="let sdg of sdgOption; let i=index">
+                                            <div class="form-check" [attr.data-color]="sdg.icon_color">
+                                                <input class="form-check-input" type="checkbox" [value]="sdg.id"
+                                                    [checked]="sdg.selected" (change)="onCheckboxChange($event)"
+                                                    id="flexCheckDefault-{{sdg.id}}" style="--color:{{ sdg.icon_color }}">
+                                                <label class="form-check-label" for="flexCheckDefault-{{sdg.id}}" style="--color:{{ sdg.icon_color }}">
+                                                    <span [attr.data-color]="sdg.icon_color"><img src="./assets/images/{{ sdg.icon }}" alt="">
+                                                    </span>
+                                                    <strong>{{sdg.name}}</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="sdg_step && sdg['sdg_ids'].errors" class="text-danger">
+                                            <p class="error" *ngIf="sdg['sdg_ids'].errors['required']">
+                                            SDG is required, select atleast one value.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <ul>
+                                    <li>
+                                        <input (click)="next()" type="button" name="next" class="btn btn-green"
+                                            value="Next" />
+                                    </li>
+                                    <li>
+                                        <input (click)="previous()" type="button" name="previous" class="btn btn-outline-green"
+                                            value="Back" />
+                                    </li>
+                                    <li>
+                                        <input (click)="skip()" type="button" name="skip" class="btn btn-back"
+                                            value="skip" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset *ngIf="step == 4">
+                <div class="personalise-experience socail-details">
+                    <div class="white-box">
+                        <form [formGroup]="socialDetails">
+                            <div class="personalise-inner-box">
+
+                                <div class="personalise-experience-left">
+                                    <div class="title">
+                                        <h4>We’d love <br> to get to know you better</h4>
+                                        <strong>Personalise your experience</strong>
+                                    </div>
+                                    <div class="description">
+                                        <p>How frequently do you use the following apps?</p>
+                                    </div>
+                                </div>
+
+                                <div class="personalise-experience-right">
+                                    <div class="socail-color-box">
+                                        <!-- Twitter -->
+                                        <div class="socail-range-item">
+
+                                            <div class="socail-range-icon">
+                                                <span><i class="fab fa-twitter"></i>Twitter</span>
+                                            </div>
+                                            <div class="socail-range-slider">
+                                                <ngx-slider [(value)]="socialDetails.value.twitter"
+                                                    [options]="options"></ngx-slider>
+                                                <input cFormControl type="hidden" formControlName="twitter"
+                                                    [ngClass]="{ 'is-invalid': social_step && social['twitter'].errors }" />
+                                                <div *ngIf="social_step && social['twitter'].errors"
+                                                    class="text-danger">
+                                                    <div *ngIf="social['twitter'].errors['required']">Twitter is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="socail-range-slider">
+                                                    <div id="twitter-slider" class="no-ui-slider">
+                                                        <div class="slider" data-id="twitter-slider"></div>
+                                                        <ul class="slider-labels" data-id="twitter-slider">
+                                                            <li class="active">Not at all</li>
+                                                            <li>Rarely</li>
+                                                            <li>Regular</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <input cFormControl type="hidden" formControlName="twitter" id="twitter-slider-input" />  -->
+                                        </div>
+
+                                        <!-- Facebook -->
+                                        <div class="socail-range-item">
+                                            <div class="socail-range-icon">
+                                                <span><i class="fab fa-facebook-f"></i>Facebook</span>
+                                            </div>
+                                            <div class="socail-range-slider">
+                                                <ngx-slider [(value)]="socialDetails.value.facebook"
+                                                    [options]="options"></ngx-slider>
+                                                <input cFormControl type="hidden" formControlName="facebook"
+                                                    [ngClass]="{ 'is-invalid': social_step && social['facebook'].errors }" />
+                                                <div *ngIf="social_step && social['facebook'].errors"
+                                                    class="text-danger">
+                                                    <div *ngIf="social['facebook'].errors['required']">Facebook is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="socail-range-slider">
+                                                    <div id="facebook-slider" class="no-ui-slider">
+                                                        <div class="slider" data-id="facebook-slider"></div>
+                                                        <ul class="slider-labels" data-id="facebook-slider">
+                                                            <li class="active">Not at all</li>
+                                                            <li>Rarely</li>
+                                                            <li>Regular</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <input cFormControl type="hidden" formControlName="facebook" id="facebook-slider-input"/>  -->
+                                        </div>
+
+                                        <!-- Linkedin -->
+                                        <div class="socail-range-item">
+                                            <div class="socail-range-icon">
+                                                <span><i class="fab fa-linkedin-in"></i>Linkedin</span>
+                                            </div>
+                                            <div class="socail-range-slider">
+                                                <ngx-slider [(value)]="socialDetails.value.linkedin"
+                                                    [options]="options"></ngx-slider>
+                                                <input cFormControl type="hidden" formControlName="linkedin"
+                                                    [ngClass]="{ 'is-invalid': social_step && social['linkedin'].errors }" />
+                                                <div *ngIf="social_step && social['linkedin'].errors"
+                                                    class="text-danger">
+                                                    <div *ngIf="social['linkedin'].errors['required']">LinkedIn is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="socail-range-slider">
+                                                    <div id="linkedin-slider" class="no-ui-slider">
+                                                        <div class="slider" data-id="linkedin-slider"></div>
+                                                        <ul class="slider-labels" data-id="linkedin-slider">
+                                                            <li class="active">Not at all</li>
+                                                            <li>Rarely</li>
+                                                            <li>Regular</li> 
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <input cFormControl type="hidden" formControlName="linkedin" id="linkedin-slider-input" /> -->
+                                        </div>
+
+                                        <!-- Instagram -->
+                                        <div class="socail-range-item">
+                                            <div class="socail-range-icon">
+                                                <span><i class="fab fa-instagram"></i>Instagram</span>
+                                            </div>
+                                            <div class="socail-range-slider">
+                                                <ngx-slider [(value)]="socialDetails.value.instagram"
+                                                    [options]="options"></ngx-slider>
+                                                <input cFormControl type="hidden" formControlName="instagram"
+                                                    [ngClass]="{ 'is-invalid': social_step && social['instagram'].errors }" />
+                                                <div *ngIf="social_step && social['instagram'].errors"
+                                                    class="text-danger">
+                                                    <div *ngIf="social['instagram'].errors['required']">LinkedIn is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Tiktok -->
+                                        <div class="socail-range-item">
+                                            <div class="socail-range-icon">
+                                                <span><i class="fab fa-tiktok"></i>Tiktok</span>
+                                            </div>
+                                            <div class="socail-range-slider">
+                                                <ngx-slider [(value)]="socialDetails.value.tiktok"
+                                                    [options]="options"></ngx-slider>
+                                                <input cFormControl type="hidden" formControlName="tiktok"
+                                                    [ngClass]="{ 'is-invalid': social_step && social['tiktok'].errors }" />
+                                                <div *ngIf="social_step && social['tiktok'].errors"
+                                                    class="text-danger">
+                                                    <div *ngIf="social['tiktok'].errors['required']">LinkedIn is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Snapchat -->
+                                        <div class="socail-range-item">
+                                            <div class="socail-range-icon">
+                                                <span><i class="fab fa-snapchat-ghost"></i>Snapchat</span>
+                                            </div>
+                                            <div class="socail-range-slider">
+                                                <ngx-slider [(value)]="socialDetails.value.snapchat"
+                                                    [options]="options"></ngx-slider>
+                                                <input cFormControl type="hidden" formControlName="snapchat"
+                                                    [ngClass]="{ 'is-invalid': social_step && social['snapchat'].errors }" />
+                                                <div *ngIf="social_step && social['snapchat'].errors"
+                                                    class="text-danger">
+                                                    <div *ngIf="social['snapchat'].errors['required']">LinkedIn is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-footer">
+                                <ul>
+                                    <li>
+                                        <input (click)="next()" type="button" name="next" class="btn btn-green"
+                                            value="Next" />
+                                    </li>
+                                    <li>
+                                        <input (click)="previous()" type="button" name="previous" class="btn btn-outline-green"
+                                            value="Back" />
+                                    </li>
+                                    <li>
+                                        <input (click)="skip()" type="button" name="skip" class="btn btn-back"
+                                            value="skip" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset *ngIf="step == 5">
+                <div class="personalise-experience last-step">
+                    <div class="white-box">
+
+                        <form [formGroup]="socialDetails">
+                            <div class="personalise-inner-box">
+                                <div class="personalise-experience-left">
+                                    <div class="title">
+                                        <h4>We’d love<br> to get to know you better</h4>
+                                        <strong>Personalise your experience</strong>
+                                    </div>
+                                    <div class="description">
+                                        <p>If you had a magic wand, which two things would you change to make the
+                                            world a better place for everyone?
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="personalise-experience-right">
+                                    <div class="check_circle-row">
+                                        <div class="check_circle-item" *ngFor="let data of interestList; let i=index">
+                                            <div class="form-check category-{{ data.id }}">
+                                                <input class="form-check-input" type="checkbox" [value]="data.id"
+                                                    [checked]="data.selected" (change)="onInterestCheckboxChange($event)"
+                                                    id="flexCheckDefault-{{i}}">
+                                                <label class="form-check-label" for="flexCheckDefault-{{i}}">
+                                                    <span *ngIf="data.id == 1" class="material-symbols-sharp"> bolt</span>
+                                                    <span *ngIf="data.id == 2" class="material-symbols-sharp">
+                                                        sunny
+                                                    </span>
+                                                    <span *ngIf="data.id == 3" class="material-symbols-outlined">
+                                                        support
+                                                        </span>
+                                                    <span *ngIf="data.id == 4" class="material-symbols-sharp">
+                                                        assist_walker
+                                                        </span>
+                                                    <strong>{{data.name}}</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="interest_step && this.interestDetails.controls['interest_ids'].errors" class="text-danger">
+                                            <p class="error" *ngIf="this.interestDetails.controls['interest_ids'].errors['required']">
+                                            Category is required, select atleast one value.</p>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="check_circle-row">
+                                        <div class="check_circle-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    <span class="material-symbols-sharp"> bolt</span>
+                                                    <strong>Crises Relief</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="check_circle-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheck">
+                                                <label class="form-check-label" for="flexCheck">
+                                                    <span class="material-symbols-sharp">
+                                                        sunny
+                                                    </span>
+                                                    <strong>Environmental Concerns</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="check_circle-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="Default">
+                                                <label class="form-check-label" for="Default">
+                                                    <span class="material-symbols-outlined">
+                                                        support
+                                                        </span>
+                                                    <strong>Social Injustices</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="check_circle-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDef">
+                                                <label class="form-check-label" for="flexCheckDef">
+                                                    <span class="material-symbols-sharp">
+                                                        assist_walker
+                                                        </span>
+                                                    <strong>Economic Development</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div> -->
+                                </div>
+
+                                <div class="form-footer">
+                                    <ul>
+                                        <li>
+                                            <input (click)="submit()" type="submit" name="submit" class="btn btn-green"
+                                                value="Submit" />
+                                        </li>
+                                        <li>
+                                            <input (click)="previous()" type="button" name="previous"
+                                                class="btn btn-outline-green" value="Back" />
+                                        </li>
+                                        <li>
+                                        <input (click)="skip()" type="button" name="skip" class="btn btn-back"
+                                            value="skip" />
+                                    </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+    </div>
+</div>
+<!-- body-end -->

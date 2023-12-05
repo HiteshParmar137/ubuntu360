@@ -1,0 +1,376 @@
+
+
+<div class="main-pro-detail ds_pro_details">
+    <div class="ds_project_detail_main">
+        <div class="ds_project_detail_top">
+            <div class="left">
+                <h5>Project Details</h5>
+            </div>
+            <div class="right">
+                <a [routerLink]="['/user/projects/' + projectListType]" class="btn btn-outline-green">Back</a>
+                <a class="btn btn-outline-red" (click)="followUnfollow(projectDetails.p_id,projectDetails.isFollow == 0 ? 'follow' : 'unfollow')" *ngIf="fromMyFollowed && projectDetails.isFollow == 1">Unfollow</a>
+                <a class="btn btn-outline-red" (click)="followUnfollow(projectDetails.p_id,projectDetails.isFollow == 0 ? 'follow' : 'unfollow')" *ngIf="fromMyFollowed && projectDetails.isFollow == 0">Follow</a>
+                <a [routerLink]="['/user/projects/edit/' + projectDetails.p_id]" class="btn btn-outline-skyblue" *ngIf="fromMyProject && !isCompleted && projectDetails.status !='Approved'">Edit Project</a>
+                <a class="btn btn-outline-green" (click)="completeProject(projectDetails.p_id);" *ngIf="fromMyProject && !isCompleted && projectDetails.status !='Rejected' && projectDetails.status !='Pending' && projectDetails.status !='Draft'">Mark as Completed</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9 col-12">
+                <div class="pro_detail_info">
+                    <div class="pro_detail_banner">
+                        <img src="{{projectDetails.default_image}}" alt="">
+                    </div>
+                    <div class="pro_detail_text">
+                        <div class="category-title category-{{projectDetails.category_id}}">
+                            <span class="material-symbols-sharp" *ngIf="projectDetails.category_id == 1"> bolt</span>
+                            <span class="material-symbols-sharp" *ngIf="projectDetails.category_id == 2"> sunny</span>
+                            <span class="material-symbols-sharp" *ngIf="projectDetails.category_id == 3"> support</span>
+                            <span class="material-symbols-sharp" *ngIf="projectDetails.category_id == 4"> assist_walker</span>
+                            <!-- Crises Relief -->
+                            {{ projectDetails.category_name}}
+                        </div>
+                        <!-- <div class="category-title category-1" *ngIf="projectDetails.category_id == 2">
+                            <span class="material-symbols-sharp"> sunny</span>
+                            Crises Relief
+                        </div> -->
+                        <div class="pro__sub__title">
+                            <h4>{{projectDetails.title}}</h4>
+                            <div class="project-review">
+                                <div class="star-icon">
+                                    <ul [innerHTML]="projectDetails.starsHTML">
+                                    </ul>
+                                </div>
+                                <div class="review-text"><a href="javascript:void(0)">{{projectDetails.reviewCount}} Reviews</a></div>
+                            </div>
+                        </div>
+                        <div class="pro-category-icon">
+                            <ul>
+                                <li *ngFor="let sdg of projectDetails.sdgs">
+                                    <div class="category-icon">
+                                        <img src="../assets/images/{{sdg.icon}}" alt="">
+                                        {{sdg.name}}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="description-box">
+                            <strong class="title">Description</strong>
+                            <p>{{projectDetails.description}}</p>
+                        </div>
+                        <div class="description-box" *ngIf="projectDetails.project_url">
+                            <strong class="title">Project Website</strong>
+                            <p>{{projectDetails.project_url}}</p>
+                        </div>
+                        <div class="description-box">
+                            <strong class="title">Status</strong>
+                            <p>{{projectDetails.status}}</p>
+                        </div>
+                        <div class="description-box" *ngIf="projectDetails.reject_reason && projectDetails.reject_reason.length > 0">
+                            <strong class="title">Reject Reason</strong>
+                            <p *ngFor="let reject_reason of projectDetails.reject_reason">{{reject_reason.comment}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pro_detail_slider" *ngIf="projectDetails.gallery?.length > 0">
+                    <div class="galley-slider">
+                        <div class="container">
+                            <div class="galley-slider-box">
+                                <owl-carousel-o [options]="customOptions">
+                                    <ng-template carouselSlide *ngFor="let projectGallery of this.projectDetails.gallery;">
+                                        <div class="slide">
+                                            <a [href]="projectGallery.url" data-fancybox
+                                                data-caption="Caption for single image" *ngIf="projectGallery.type=='image'">
+                                                <img src="{{projectGallery.url}}" alt="img 1" *ngIf="projectGallery.type=='image'">
+                                            </a>
+                                            <a [href]="projectGallery.url" data-fancybox
+                                                data-caption="Caption for single image" *ngIf="projectGallery.type=='video'">
+                                                <video [src]="projectGallery.url" *ngIf="projectGallery.type=='video'"></video>
+                                                <div class="video-icon">
+                                                    <span class="material-symbols-outlined ">
+                                                        play_arrow
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </ng-template>
+                                </owl-carousel-o>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                <!-- item  -->
+                <div class="impact-document-item pro_detail_slider" *ngFor="let document of projectDetails.project_documents;">
+                    <div class="impact-icon">
+                        <span class="material-symbols-outlined"> import_contacts </span>
+                    </div>
+                    <div class="impact-title">
+                        <h5>{{ document.document_name }}</h5>
+                    </div>
+                    <div class="impact-date">
+                        <span>{{ document.date }}</span>
+                    </div>
+                    <div class="impact-view-icon">
+                        <a target="_blank" [download]="document.url" [href]="document.url">
+                            <span class="material-symbols-outlined">
+                                visibility
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="pro_detail_slider" *ngIf="projectDetails.volunteer_list?.length > 0">
+                    <div class="ds_donation_title" >
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="ds_donation_innerbox volunteer_innerbox">
+                                    <div class="ds_donation_inner_title sub_title">
+                                        Volunteer Name
+                                    </div>
+                                    <div class="ds_donation_inner_title sub_title">
+                                        Email
+                                    </div>
+                                    <div class="ds_donation_inner_title sub_title">
+                                        comment
+                                    </div>
+                                    <div class="ds_donation_inner_title sub_title">
+                                        Sponsor Type
+                                    </div>
+                                    <div class="ds_donation_inner_title sub_title">
+                                        Created Date
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ds_donation_text" *ngIf="projectDetails.volunteer_list?.length > 0">
+                        <div class="row">
+                            <div class="col-12" *ngFor="let volunteerDetails of projectDetails.volunteer_list let i = index">
+                                <div class="ds_donation_innerbox volunteer_innerbox">
+                                    <div class="ds_donation_inner_title">
+                                       {{volunteerDetails.user_name}}
+                                    </div>
+                                    <div class="ds_donation_inner_title">
+                                        {{volunteerDetails.email}}
+                                    </div>
+                                    <div class="ds_donation_inner_title">
+                                        {{volunteerDetails.comment}}
+                                    </div>
+                                    <div class="ds_donation_inner_title">
+                                        {{volunteerDetails.sponsor_type}}
+                                    </div>
+                                    <div class="ds_donation_inner_title">
+                                        {{volunteerDetails.apply_date}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="pro_detail_review" *ngIf="allReviews && allReviews.length > 0">
+                    <strong class="recent-review-title" *ngIf="allReviews.length > 0">Reviews</strong>
+                    <div class="pro_detail_review_item" *ngFor="let review of allReviews|paginate: { itemsPerPage: per_page, currentPage: page, totalItems: total }; let i = index">
+                        <div class="left">
+                            <div class="img">
+                                <img src="{{review.profile_image}}" alt="img">
+                            </div>
+                            <div class="title">
+                                <strong>{{review.user_name}}</strong>
+                                <span>{{review.created_at}}</span>
+                            </div>
+                        </div>
+                        <div class="center">
+                            <p>{{review.comment}}</p>
+                        </div>
+                        <div class="right">
+                            <ul [innerHTML]="review.starsHTML">
+                                <!-- <li><span class="material-symbols-sharp">
+                                        grade </span></li>
+                                <li><span class="material-symbols-sharp">
+                                        grade </span></li>
+                                <li><span class="material-symbols-sharp">
+                                        grade </span></li>
+                                <li><span class="material-symbols-sharp">
+                                        grade </span></li>
+                                <li><span class="material-symbols-outlined"> grade </span></li> -->
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- <div class="pro_detail_review_item">
+                        <div class="left">
+                            <div class="img">
+                                <img src="../assets/images/galley-slider-2.jpg" alt="">
+                            </div>
+                            <div class="title">
+                                <strong>Lorem Ipsum</strong>
+                                <span>26/04/2023, 12:42 AM</span>
+                            </div>
+                        </div>
+                        <div class="center">
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                printer took a galley of type and scrambled it to make a type specimen book.</p>
+                        </div>
+                        <div class="right">
+                            <ul>
+                                <li><span class="material-symbols-sharp">
+                                        grade </span></li>
+                                <li><span class="material-symbols-sharp">
+                                        grade </span></li>
+                                <li><span class="material-symbols-sharp">
+                                        grade </span></li>
+                                <li><span class="material-symbols-sharp">
+                                        grade </span></li>
+                                <li><span class="material-symbols-outlined"> grade </span></li>
+                            </ul>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="ds_pagination">
+                    <nav aria-label="Page navigation example" class="pt-3" *ngIf="finalResponse.length > 0">
+                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination" class="pagination pagination-list">
+                            <li class="page-item custom-pagination">
+                                <ng-container *ngIf="pager.currentPage === 1">
+                                    <a data-tooltip="tooltip" title="First" class="page-link custom-page-link"
+                                        [ngClass]="{ disabled: pager.currentPage === 1 }" style="cursor: pointer">
+                                        <i class="fa fa-angle-double-left"></i>
+                                    </a>
+                                </ng-container>
+                                <ng-container *ngIf="pager.currentPage != 1">
+                                    <a data-tooltip="tooltip" title="First" class="page-link custom-page-link"
+                                        [ngClass]="{ disabled: pager.currentPage === 1 }" (click)="setCurrent(1)">
+                                        <i class="fa fa-angle-double-left"></i>
+                                    </a>
+                                </ng-container>
+                            </li>
+                            <li class="page-item custom-pagination">
+                                <ng-container *ngIf="pager.currentPage === 1">
+                                    <a data-tooltip="tooltip" title="PREVIOUS" class="page-link custom-page-link"
+                                        [ngClass]="{ disabled: pager.currentPage === 1 }" style="cursor: pointer">
+                                        <i class="fa fa-angle-left"></i>
+                                    </a>
+                                </ng-container>
+                                <ng-container *ngIf="pager.currentPage != 1">
+                                    <a data-tooltip="tooltip" title="PREVIOUS" class="page-link custom-page-link"
+                                        [ngClass]="{ disabled: pager.currentPage === 1 }"
+                                        (click)="setCurrent(pager.currentPage - 1)">
+                                        <i class="fa fa-angle-left"></i>
+                                    </a>
+                                </ng-container>
+                            </li>
+                            <li *ngFor="let page of pager.pages" [class.active]="pager.currentPage === page"
+                                class="page-item custom-pagination">
+                                <a class="page-link custom-page-link" (click)="setCurrent(page)" style="cursor: pointer">{{
+                                    page }}</a>
+                            </li>
+                            <li class="page-item custom-pagination">
+                                <ng-container *ngIf="pager.currentPage === pager.totalPages">
+                                    <a data-tooltip="tooltip" title="NEXT" class="page-link custom-page-link" [ngClass]="{
+                            disabled: pager.currentPage === pager.totalPages
+                          }" style="cursor: pointer">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </ng-container>
+                                <ng-container *ngIf="pager.currentPage != pager.totalPages">
+                                    <a data-tooltip="tooltip" title="NEXT" class="page-link custom-page-link" [ngClass]="{
+                            disabled: pager.currentPage === pager.totalPages
+                          }" (click)="setCurrent(pager.currentPage + 1)">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </ng-container>
+                            </li>
+                            <li class="page-item arrow-pagination">
+                                <ng-container *ngIf="pager.currentPage === pager.totalPages">
+                                    <a data-tooltip="tooltip" title="LAST" class="page-link custom-page-link" [ngClass]="{
+                            disabled: pager.currentPage === pager.totalPages
+                          }" style="cursor: pointer">
+                                        <i class="fa fa-angle-double-right"></i>
+                                    </a>
+                                </ng-container>
+                                <ng-container *ngIf="pager.currentPage != pager.totalPages">
+                                    <a data-tooltip="tooltip" title="LAST" class="page-link custom-page-link" [ngClass]="{
+                            disabled: pager.currentPage === pager.totalPages
+                          }" (click)="setCurrent(pager.totalPages)">
+                                        <i class="fa fa-angle-double-right"></i>
+                                    </a>
+                                </ng-container>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="funder-user">
+                    <div class="funder-section">
+                        <strong class="funder-title">Funds</strong>
+                        <ul>
+                            <li><span>Raised</span><strong>${{projectDetails.totalAmount}}</strong></li>
+                            <!-- <li><span>Goal</span><strong>$4234.00</strong></li> -->
+                            <li><span>Goal</span><strong>${{projectDetails.amount}}</strong></li>
+                            <!-- <li><span>Left</span><strong>$4234.00</strong></li> -->
+                            <li><span>Left</span><strong>${{projectDetails.left_amount}}</strong></li>
+                        </ul>
+                    </div>
+                    <div class="volunteers-section" *ngIf="projectDetails.volunteer > 0">
+                        <strong class="funder-title">Volunteers</strong>
+                        <ul>
+                            <li><span>Joined</span><strong>{{projectDetails.totalVolunteer}}</strong></li>
+                            <li><span>Goal</span><strong>{{projectDetails.volunteer}}</strong></li>
+                            <li><span>Left</span><strong>{{projectDetails.leftVolunteer}}</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="user_profile-section">
+                    <div class="user_profile_inner">
+                        <img src="{{projectDetails.project_user_image}}" alt="" *ngIf="projectDetails.project_user_image && projectDetails.project_user_image != ''">
+                        <img src="../assets/images/user.png" alt="" *ngIf="!projectDetails.project_user_image || projectDetails.project_user_image == ''">
+                        <!-- <span class="material-symbols-outlined">
+                            visibility
+                        </span> -->
+                    </div>
+                    <div class="user_profile_deta">
+                        <h4>{{projectDetails.user}}</h4>
+                        <p *ngIf="projectDetails.project_user_type == 1">Individual Sponsor</p>
+                        <p *ngIf="projectDetails.project_user_type == 2">Corporate Sponsor</p>
+                    </div>
+                    <div class="user-profile-deta">
+                        <!-- <ul>
+                            <li><strong>150</strong><span>Causes</span></li>
+                            <li><strong>150</strong><span>Volunteers</span></li>
+                            <li><strong>150</strong><span>Completed</span></li>
+                        </ul> -->
+                    </div>
+                    <!-- <div class="view-profile-button">
+                        <a href="#" class="btn btn-outline-green">View Profile</a>
+                    </div> -->
+                </div>
+                <div class="top-donors-main resent-donations" *ngIf="projectDetails.donations && projectDetails.donations.length > 0">
+                    <h4 class="title" >Recent Donations</h4>
+                    <div class="top-donor-item" *ngFor="let donation of projectDetails.donations">
+                        <div class="top-donor-left">
+                            <div class="donor-img"><img src="{{donation.profile_image}}" alt="" *ngIf="donation.profile_image && donation.profile_image != ''"></div>
+                            <div class="donor-img"><img src="../assets/images/user.png" alt="" *ngIf="donation.profile_image == ''"></div>
+                            <div class="donortitle"><strong>{{donation.user_name}}</strong></div>
+                        </div>
+                        <div class="top-donor-right"><strong>${{donation.amount}}</strong></div>
+                    </div>
+                    <!-- <div class="top-donor-item">
+                        <div class="top-donor-left">
+                            <div class="donor-img"><img src="./assets/images/following-small.jpg" alt=""></div>
+                            <div class="donortitle"><strong>Donor Name</strong></div>
+                        </div>
+                        <div class="top-donor-right"><strong>$12,345</strong></div>
+                    </div>
+                    <div class="top-donor-item">
+                        <div class="top-donor-left">
+                            <div class="donor-img"><img src="./assets/images/following-small.jpg" alt=""></div>
+                            <div class="donortitle"><strong>Donor Name</strong></div>
+                        </div>
+                        <div class="top-donor-right"><strong>$12,345</strong></div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

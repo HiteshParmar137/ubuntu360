@@ -1,0 +1,181 @@
+<div class="page-content" style="min-height:659px">
+    <!-- BEGIN PAGE HEADER-->
+    <div class="portlet box yellow-crusta float-none content-box my-md-4  mx-md-3 border-0">
+        <div class="portlet-body form bg-transparent p-3 border-0">
+            <div class="actions text-end mb-lg-0 mb-3">
+                <!-- <a  class="btn btn-success">Export All</a> -->
+            </div>
+            <div class="actions text-end pb-3">
+                <!-- <a [routerLink]="['/project/add']" class="btn btn-success inline-btn"><i class="fa fa-plus"></i> Add</a> -->
+                <a (click)="resetFilter()" class="btn btn-secondary mx-2 inline-btn">Reset</a>
+                <button class="btn btn-success" (click)="export()">Export</button>
+            </div>
+            <div class="row mb-4 h-100">
+                <!-- <div class="col-xl-4 col-lg-6 col-sm-7 mb-lg-0 mb-3"> -->
+                <!-- </div> -->
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="job-form-input w-100  position-relative h-100">
+                        <input type="text" [(ngModel)]="email" (keyup)="reloadUserReport()"
+                            class="h-100 form-control ps-5 bg-f1f1f1 border-0 font-18 searh-form" name="email" id="email"
+                            placeholder="Search By Email">
+                        <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 mt-md-0 mt-3">
+                    <div class="h-100 job-form-input w-100 d-inline-block position-relative">
+                        <input type="text" [(ngModel)]="position" (keyup)="reloadUserReport()"
+                            class="h-100 form-control ps-5 bg-f1f1f1 border-0 font-18 searh-form" name="position" id="position"
+                            placeholder="Search By Position">
+                        <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 mt-lg-0 mt-3">
+                    <select class="form-control form-select-design" (change)="reloadUserReport()"
+                        [(ngModel)]="sponser" cSelect>
+                        <option value="" selected>Select Sponser Type</option>
+                        <option value="1" >Individual</option>
+                        <option value="2" >Corporate</option>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="table-responsive table-scrollable border-0 user-report-table">
+                <table class="table table-customize" border="0">
+                    <thead>
+                        <tr class="head-top">
+                            <th scope="col">Sr. no.</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">DOB</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Contact No</th>
+                            <th scope="col">Sponsor Type</th>
+                            <th scope="col">Corporation Name</th>
+                            <th scope="col">Industry name</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">Contact name</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">SDG</th>
+                            <th scope="col">Twitter</th>
+                            <th scope="col">Facebook</th>
+                            <th scope="col">LinkedIn</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Total Projects</th>
+                            <th scope="col">Total Donation</th>
+                            <th scope="col">Total Followed Projects </th>
+                            <th scope="col">Signup Completed</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="finalResponse.length > 0">
+                        <tr *ngFor="let finalRes of finalResponse let i = index">
+                            <td scope="col">{{finalRes.sl_no}}</td>
+                            <td scope="col">{{finalRes.name}}</td>
+                            <td scope="col">{{finalRes.email}}</td>
+                            <td scope="col">{{finalRes.dob}}</td>
+                            <td scope="col">{{finalRes.location}}</td>
+                            <td scope="col">{{finalRes.contact_number}}</td>
+                            <td scope="col">{{finalRes.sponsor_type}}</td>
+                            <td scope="col">{{finalRes.corporation_name}}</td>
+                            <td scope="col">{{finalRes.industry}}</td>
+                            <td scope="col">{{finalRes.city}}</td>
+                            <td scope="col">{{finalRes.countury}}</td>
+                            <td scope="col">{{finalRes.contact_name}}</td>
+                            <td scope="col">{{finalRes.position}}</td>
+                            <td scope="col">{{finalRes.sdg_names}}</td>
+                            <td scope="col">{{finalRes.twitter}}</td>
+                            <td scope="col">{{finalRes.facebook}}</td>
+                            <td scope="col">{{finalRes.linkedin}}</td>
+                            <td scope="col">{{finalRes.category}}</td>
+                            <td scope="col">{{finalRes.total_project}}</td>
+                            <td scope="col">${{finalRes.donation_amount}}</td>
+                            <td scope="col">{{finalRes.total_project_follow}}</td>
+                            <td scope="col">{{finalRes.signup_completed}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ng-container *ngIf="finalResponse.length === 0">
+                    <div class="row col-12 mt-4">
+                        <h4 style="text-align: center"><b>{{noDataFlag}}</b></h4>
+                    </div>
+                </ng-container>
+                <nav aria-label="Page navigation example" class="pt-3"
+                    *ngIf="finalResponse.length > 0 && pager.totalPages != 1">
+                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination" class="pagination pagination-list">
+                        <li class="page-item custom-pagination">
+                            <ng-container *ngIf="pager.currentPage === 1">
+                                <a data-tooltip="tooltip" title="First" class="page-link custom-page-link"
+                                    [ngClass]="{ disabled: pager.currentPage === 1 }" style="cursor: pointer">
+                                    <i class="fa fa-angle-double-left"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="pager.currentPage != 1">
+                                <a data-tooltip="tooltip" title="First" class="page-link custom-page-link"
+                                    [ngClass]="{ disabled: pager.currentPage === 1 }" (click)="setCurrent(1)">
+                                    <i class="fa fa-angle-double-left"></i>
+                                </a>
+                            </ng-container>
+                        </li>
+                        <li class="page-item custom-pagination">
+                            <ng-container *ngIf="pager.currentPage === 1">
+                                <a data-tooltip="tooltip" title="PREVIOUS" class="page-link custom-page-link"
+                                    [ngClass]="{ disabled: pager.currentPage === 1 }" style="cursor: pointer">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="pager.currentPage != 1">
+                                <a data-tooltip="tooltip" title="PREVIOUS" class="page-link custom-page-link"
+                                    [ngClass]="{ disabled: pager.currentPage === 1 }"
+                                    (click)="setCurrent(pager.currentPage - 1)">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </ng-container>
+                        </li>
+                        <li *ngFor="let page of pager.pages" [class.active]="pager.currentPage === page"
+                            class="page-item custom-pagination">
+                            <a class="page-link custom-page-link" (click)="setCurrent(page)" style="cursor: pointer">{{
+                                page }}</a>
+                        </li>
+                        <li class="page-item custom-pagination">
+                            <ng-container *ngIf="pager.currentPage === pager.totalPages">
+                                <a data-tooltip="tooltip" title="NEXT" class="page-link custom-page-link" [ngClass]="{
+                                disabled: pager.currentPage === pager.totalPages
+                              }" style="cursor: pointer">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="pager.currentPage != pager.totalPages">
+                                <a data-tooltip="tooltip" title="NEXT" class="page-link custom-page-link" [ngClass]="{
+                                disabled: pager.currentPage === pager.totalPages
+                              }" (click)="setCurrent(pager.currentPage + 1)">
+                                    <i class="fa fa-angle-right"></i>
+                                    <!-- <img
+                                src="/assets/images/right-single-arrow.png"
+                                alt="Arrow"
+                                class="rl-arrow"
+                            /> -->
+                                </a>
+                            </ng-container>
+                        </li>
+                        <li class="page-item arrow-pagination">
+                            <ng-container *ngIf="pager.currentPage === pager.totalPages">
+                                <a data-tooltip="tooltip" title="LAST" class="page-link custom-page-link" [ngClass]="{
+                                disabled: pager.currentPage === pager.totalPages
+                              }" style="cursor: pointer">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="pager.currentPage != pager.totalPages">
+                                <a data-tooltip="tooltip" title="LAST" class="page-link custom-page-link" [ngClass]="{
+                                disabled: pager.currentPage === pager.totalPages
+                              }" (click)="setCurrent(pager.totalPages)">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            </ng-container>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

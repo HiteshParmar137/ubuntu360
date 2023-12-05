@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-content" style="min-height: 659px">
+                <div class="portlet box blue-steel float-none content-box my-md-4 mx-md-3 border-0">
+                    <h2>Volunteer</h2>
+                    <form [formGroup]="volunteerForm" (ngSubmit)="onSubmit()">
+                        <div class="portlet-body form bg-transparent p-3 border-0">
+                            <div class="actions text-end">
+                                <a [routerLink]="['../../details',id]" class="btn default"><i
+                                        class="fa-solid fa-chevron-left"></i>
+                                    Back</a>
+                            </div>
+                            <div class="p-3">
+                                <c-row class="mb-3">
+                                    <label cLabel="col" cCol [sm]="3" class="control-label text-sm-end text-start">
+                                        Which kind of sponser are you?<span class="required">*</span>
+                                    </label>
+                                    <c-col [sm]="4">
+                                        <label class="radio-inline">
+                                            <input type="radio" value="1" formControlName="volunteer_type">
+                                            <span>In Person volunteering</span>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" value="2" formControlName="volunteer_type">
+                                            <span>Online volunteering</span>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" value="3" formControlName="volunteer_type">
+                                            <span>Consulting</span>
+                                        </label>
+                                        <div *ngIf="isSubmitted && f['volunteer_type'].errors" class="text-danger">
+                                            <div *ngIf="f['volunteer_type'].errors['required']">Sponser type is required
+                                            </div>
+                                        </div>
+                                    </c-col>
+                                </c-row>
+                                <c-row class="mb-3">
+                                    <label cLabel="col" cCol [sm]="3" class="control-label text-sm-end text-start">
+                                        <!-- Content<span class="required">*</span> -->
+                                    </label>
+                                    <c-col [sm]="4">
+                                        <textarea rows="10" cols="35" formControlName="volunteer_comment"
+                                            [ngClass]="{ 'is-invalid': isSubmitted && f['volunteer_comment'].errors }"
+                                            placeholder="Share your thoughts..."></textarea>
+                                        <div *ngIf="isSubmitted && f['volunteer_comment'].errors" class="text-danger">
+                                            <div *ngIf="f['volunteer_comment'].errors['required']">Thought is required
+                                            </div>
+                                        </div>
+                                    </c-col>
+                                </c-row>
+                            </div>
+                            <div class="form-actions footer-action border-0 fluid">
+                                <div class="col-md-offset-3 col-md-9 col-sm-12 col-xs-12 frm-button">
+                                    <button class="btn btn-success" type="submit">Save</button>&nbsp;
+                                    <button class="btn btn-secondary" type="button" [routerLink]="['../../details',id]">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

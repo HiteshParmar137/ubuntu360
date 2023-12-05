@@ -1,0 +1,57 @@
+<section class="login-section" style="background-image:url(./assets/images/login-bg-banner.jpg);">
+	<div class="container">
+		<div class="container_inner_box">
+			<div class="login-box">
+				<div class="logo">
+					<img src="./assets/images/big-logo.png" alt="">
+				</div>
+			</div>
+			<div class="form-box">
+				<form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()" class="login-form">
+					<div class="input-group">
+						<input cFormControl type="email" placeholder="Email" formControlName="email"
+							class="form-control" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" (input) ="makeEnable()"/>
+						<div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+							<div *ngIf="f['email'].errors['required']">Email address is required
+							</div>
+							<div *ngIf="f['email'].errors && f['email'].errors['email']">
+								Email is invalid
+							</div>
+						</div>
+					</div>
+					<div class="input-group">
+						<input cFormControl [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password"
+							class="form-control" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" (input) ="makeEnable()" />
+							<span toggle="#password" class="input-group-text password-eye"
+							[ngClass]="{ 'show': showPassword }" (click)="toggleShowPassword()"><img
+								src="./assets/images/eye-icon.png" alt=""></span>
+						<div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+							<div *ngIf="f['password'].errors['required']">Password is required</div>
+							<div *ngIf="f['password'].errors && f['password'].errors['minlength']">
+								Minimum six character password is required
+							</div>
+						</div>
+					</div>
+					<a [routerLink]="['/forget-password']" class="forgot-text">Forgot your password ?</a>
+					<button class="btn btn-green login__btn" [disabled] = "isDisabled" disabled>Login</button>
+				</form>
+				<!-- social-button  -->
+				<div class="sing-with-google">
+					<p class="top-text"><span>Or Login With</span></p>
+					<div class="sing-with-google-btn">
+						
+						<button class="facbook-btn" (click)="signInWithFB()" data-bs-toggle="tooltip" ngbTooltip="Facebook sign-up functionality coming soon..." [disabled]="true"><span><img src="./assets/images/facebook.png"
+									alt="" ></span>Facebook</button>
+						<asl-google-signin-button class="google-iframe" type='standard' text="continue_with"
+									shape="rectangular" size='medium'> </asl-google-signin-button>
+						<button class="google-btn"><span><img src="./assets/images/google.png"
+											alt=""></span>Google</button>
+									
+											
+					</div>
+				</div>
+				<p class="sign-text"> Don't have an account? <a routerLink="/register">Sign Up</a></p>
+			</div>
+		</div>
+	</div>
+</section>

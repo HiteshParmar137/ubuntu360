@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "Evidence Verification",
+        "slug": "evidence_verification",
+        "template": "<html><head><title></title></head><body><h1>Evidence Verification</h1></body></html>",
+        "status": 1
+    },
+    {
+        "id": 2,
+        "name": "Evidence Return to Work",
+        "slug": "evidence_return_to_work",
+        "template": "<html><head><title></title></head><body><h1>Evidence Return to Work</h1></body></html>",
+        "status": 0
+    },
+    {
+        "id": 3,
+        "name": "Reflection For Approval",
+        "slug": "reflection_for_approval",
+        "template": "<html><head><title></title></head><body><h1>Reflection For Approval</h1></body></html>",
+        "status": 1
+    },
+    {
+        "id": 4,
+        "name": "Reflection For Work",
+        "slug": "reflection_for_work",
+        "template": "<html><head><title></title></head><body><h1>Reflection For Work</h1></body></html>",
+        "status": 0
+    },
+    {
+        "id": 5,
+        "name": "Award",
+        "slug": "award",
+        "template": "<html><head><title></title></head><body><h1>Award</h1></body></html>",
+        "status": 1
+    },
+    {
+        "id": 6,
+        "name": "No Activity",
+        "slug": "no_activity",
+        "template": "<html><head><title></title></head><body><h1>No Activity</h1></body></html>",
+        "status": 1
+    }
+]

@@ -1,0 +1,231 @@
+<div class="page-content">
+
+    <div class="ds_pro_details">
+        <!-- top -->
+        <div class="ds_pro_detail_top">
+            <h3 class="ds_pro_detail_title">My Projects List</h3>
+            <div class="ds_detail_search">
+                <div class="ds_search">
+                    <form action="">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search Here" (input)="searchTitle($event)">
+                            <button class="ds_search_icon">
+                                <img src="../assets/images/ds_search_icon.png" alt="">
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="ds_add_project">
+                    <button [routerLink]="['/user/projects/add']" class="btn btn-green"> <i class="fas fa-plus"></i> Start New project </button>
+                </div>
+            </div>
+        </div>
+        <!-- center  -->
+        <div class="ds_pro_detail_center">
+            <div class="ds_detail_tabing_box">
+                <div class="ds_pro_detail_nav">
+                    <ul>
+                        <li>
+                            <a routerLinkActive="active" [routerLink]="['/user/projects/list']" class="nav-text">My Projects</a>
+                        </li>
+                        <li>
+                            <a routerLinkActive="active" [routerLink]="['/user/projects/follow']" class="nav-text">Followed Projects</a>
+                        </li>
+                        <li>
+                            <a routerLinkActive="active" [routerLink]="['/user/projects/complete']" class="nav-text">Completed Projects</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- <div class="ds_pro_detail_content" [ngIf]="finalResponse.length" [ngIfElse]="projectNotFound"> -->
+                <div class="ds_pro_detail_content">
+                    <div class="row" *ngIf="finalResponse">
+                        <!-- item  -->
+
+                        <div class="col-12" 
+                            *ngFor="let project of finalResponse|paginate: { itemsPerPage: per_page, currentPage: page, totalItems: total }; let i = index">
+                            <div class="ds_pro_item">
+                                <div class="pro_left">
+                                    <div class="pro_img">
+                                        <img src="{{ project.default_image }}" alt="">
+                                    </div>
+                                    <div class="pro_name">
+                                        <span class="pro_tag category-{{ project.category_id }}"
+                                            *ngIf="project.category_id == 1"><span class="material-symbols-sharp">
+                                                bolt</span> {{ project.category_name}} </span>
+                                        <span class="pro_tag category-{{ project.category_id }}"
+                                            *ngIf="project.category_id == 2"><span class="material-symbols-sharp">
+                                                sunny</span>{{ project.category_name}} </span>
+                                        <span class="pro_tag category-{{ project.category_id }}"
+                                            *ngIf="project.category_id == 3"><span class="material-symbols-sharp">
+                                                support </span> {{ project.category_name}} </span>
+                                        <span class="pro_tag category-{{ project.category_id }}"
+                                            *ngIf="project.category_id == 4"><span class="material-symbols-sharp">
+                                                assist_walker </span> {{ project.category_name}} </span>
+                                        <strong>{{ project.title }}</strong>
+                                        <div class="pro-review">
+                                            <div class="star-icon">
+                                                <ul [innerHTML]="project.starsHTML">
+                                                </ul>
+                                            </div>
+                                            <div class="review-text">
+                                                <p *ngIf="project.reviewCount > 1">{{project.reviewCount}} Reviews</p>
+                                                <p *ngIf="project.reviewCount < 2">{{project.reviewCount}} Review</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="pro_logo" *ngIf="project.sponsors.length > 0">
+                                        <ul>
+                                            <li *ngFor="let sponser of project.sponsors; let i = index">
+                                                <ng-container *ngIf="i < 4">
+                                                    <span>
+                                                        <img alt="img" [src]="sponser.image" width="38px" height="38px">
+                                                    </span>
+                                                </ng-container>
+                                            </li>
+                                            <ng-container *ngIf="project.sponsors.length >= 4">
+                                                <!-- Plus sign here-->
+                                            </ng-container>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="pro_price">
+                                    <ul>
+                                        <li>
+                                            <span>Raised</span>
+                                            <strong>${{ project.total_amount }}</strong>
+                                        </li>
+                                        <li>
+                                            <span>Goal</span>
+                                            <strong>${{ project.project_amount }}</strong>
+                                        </li>
+                                        <li>
+                                            <span>Left</span>
+                                            <strong>${{ project.left_amount }}</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- <div class="pro_edit">
+                                    <ul>
+                                        <li>
+                                            <a [routerLink]="['/projects/details/' + project.id]" class="view">
+                                                <span class="material-symbols-outlined">
+                                                    visibility
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li> -->
+                                            <!-- <div class="follow-review-btn" *ngIf="this.userId"> -->
+                                                <!-- <a (click)="followUnfollow(project.id,project.isFollow == 0 ? 'follow' : 'unfollow')"
+                                                    class="btn {{ project.isFollow == 0 ? 'btn-green' : 'btn-danger' }} inline-btn">{{
+                                                    project.isFollow == 0 ? 'Follow' : 'Unfollow' }}</a> -->
+                                                <!-- <a href="#" class="btn btn-outline-black">Review</a> -->
+                                            <!-- </div> -->
+                                        <!-- </li>                                   
+                                        
+                                    </ul>
+                                </div> -->
+
+                                
+                                <div class="unfollow">
+                                    <a [routerLink]="['/user/projects/details/' + project.id+'/followed']" class="btn btn-outline-skyblue">View Details</a>
+                                    <a (click)="followUnfollow(project.id,project.isFollow == 0 ? 'follow' : 'unfollow')"
+                                    class="btn {{ project.isFollow == 0 ? 'btn-green' : 'btn-danger' }} btn-outline-red">Unfollow</a>
+                                    <!-- <a href="#" class="btn btn-outline-red">Unfollow</a> -->
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                    <div class="row" *ngIf="finalResponse.length < 1">
+                        <div class="col-12">
+                            <p class="text-center mb-3">Follow Projects Not Found.</p>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="ds_pro_detail_content" #projectNotFound>
+                <p>Project Not Found</p>
+            </div> -->
+            <div class="ds_pagination">
+                <nav aria-label="Page navigation example" class="pt-3" *ngIf="finalResponse.length > 0 && last_page != '1'">
+                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination" class="pagination pagination-list">
+                        <li class="page-item custom-pagination">
+                            <ng-container *ngIf="pager.currentPage === 1">
+                                <a data-tooltip="tooltip" title="First" class="page-link custom-page-link"
+                                    [ngClass]="{ disabled: pager.currentPage === 1 }" style="cursor: pointer">
+                                    <i class="fa fa-angle-double-left"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="pager.currentPage != 1">
+                                <a data-tooltip="tooltip" title="First" class="page-link custom-page-link"
+                                    [ngClass]="{ disabled: pager.currentPage === 1 }" (click)="setCurrent(1)">
+                                    <i class="fa fa-angle-double-left"></i>
+                                </a>
+                            </ng-container>
+                        </li>
+                        <li class="page-item custom-pagination">
+                            <ng-container *ngIf="pager.currentPage === 1">
+                                <a data-tooltip="tooltip" title="PREVIOUS" class="page-link custom-page-link"
+                                    [ngClass]="{ disabled: pager.currentPage === 1 }" style="cursor: pointer">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="pager.currentPage != 1">
+                                <a data-tooltip="tooltip" title="PREVIOUS" class="page-link custom-page-link"
+                                    [ngClass]="{ disabled: pager.currentPage === 1 }"
+                                    (click)="setCurrent(pager.currentPage - 1)">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </ng-container>
+                        </li>
+                        <li *ngFor="let page of pager.pages" [class.active]="pager.currentPage === page"
+                            class="page-item custom-pagination">
+                            <a class="page-link custom-page-link" (click)="setCurrent(page)" style="cursor: pointer">{{
+                                page }}</a>
+                        </li>
+                        <li class="page-item custom-pagination">
+                            <ng-container *ngIf="pager.currentPage === pager.totalPages">
+                                <a data-tooltip="tooltip" title="NEXT" class="page-link custom-page-link" [ngClass]="{
+                        disabled: pager.currentPage === pager.totalPages
+                      }" style="cursor: pointer">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="pager.currentPage != pager.totalPages">
+                                <a data-tooltip="tooltip" title="NEXT" class="page-link custom-page-link" [ngClass]="{
+                        disabled: pager.currentPage === pager.totalPages
+                      }" (click)="setCurrent(pager.currentPage + 1)">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </ng-container>
+                        </li>
+                        <li class="page-item arrow-pagination">
+                            <ng-container *ngIf="pager.currentPage === pager.totalPages">
+                                <a data-tooltip="tooltip" title="LAST" class="page-link custom-page-link" [ngClass]="{
+                        disabled: pager.currentPage === pager.totalPages
+                      }" style="cursor: pointer">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="pager.currentPage != pager.totalPages">
+                                <a data-tooltip="tooltip" title="LAST" class="page-link custom-page-link" [ngClass]="{
+                        disabled: pager.currentPage === pager.totalPages
+                      }" (click)="setCurrent(pager.totalPages)">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            </ng-container>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- bottom   -->        
+    </div>
+
+</div>

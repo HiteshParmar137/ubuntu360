@@ -1,0 +1,53 @@
+<div class="inner-bnnare bg-background" style="background-image: url(./assets/images/esg-inner-bnnare.jpg);">
+    <div class="container">
+        <div class="inner-bnnare-title">
+            <a routerLink="/home"><strong>Home</strong></a>
+            <h1>ESG Reports</h1>
+        </div>
+    </div>
+</div>
+
+<div class="esg-report">
+    <div class="container">
+        <div class="esg-report-description">
+            <h2 class="esg-title">ESG Report</h2>
+            <p>An ESG report is a document that companies publish to detail their environmental, social, and governance (ESG) performance. It is a way for companies to share their sustainability efforts with stakeholders, including investors, customers, and employees. The report includes information on the company's impact on the environment, its social initiatives, and its governance practices. ESG reports are becoming increasingly important for companies as consumers and investors are paying more attention to sustainability and ethical practices. Contact us to collaborate on an ESG Report that works for your organisation.</p>
+            </div>
+            <div class="esg-form-box">
+                <form [formGroup]="EsgReportsEmailForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group-custom">
+                        <input type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$]*"
+                            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" formControlName="email"
+                            class="form-control input-custom" id="email" name="email" placeholder="Email">
+                        <div *ngIf="submitted && f['email'].errors" class="text-danger">
+                            <div *ngIf="f['email'].errors['required']">Email is required</div>
+                            <div *ngIf="f['email'].errors['email']">Email is invalid</div>
+                            <div *ngIf="!f['email'].errors['email'] &&  f['email'].errors['pattern']">Email is invalid</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-red mt-3">Contact Ubuntu 360</button>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+
+<!-- Fund-the-Future-section-start  -->
+
+<div class="fund-the-future">
+    <div class="container">
+        <div class="fund-the-future-box">
+            <div class="fund-left">
+                <h3>Fund the Future</h3>
+            </div>
+            <div class="fund-right">
+                <a [routerLink]="['/donate']" class="btn btn-outline-white">Donate Now</a>
+                <a [routerLink]="['/volunteer']" class="btn btn-outline-white">Become Volunteer</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Fund-the-Future-section-end  -->

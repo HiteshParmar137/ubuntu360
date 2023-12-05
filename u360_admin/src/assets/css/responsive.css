@@ -1,0 +1,125 @@
+@media only screen and (max-width:000px) {}
+
+
+@media only screen and (max-width:1280px) {
+    .average-donation-item {
+        margin-left: 0;
+    }
+    strong.total_donation_text {
+        position: static;
+        width: 100%;
+        display: block;
+        margin-top: 20px;
+    }
+    .average-donation .title {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width:1200px) {
+    .top-dashboard-inner_box {
+        height: 100%;
+    }
+} 
+
+
+@media only screen and (max-width:1100px) {
+    .no-sponsors,.total_donation,.average-donation {
+        padding: 15px;
+    }
+    .donations-map-chart-text {
+        margin: 60px auto 0;
+    }
+    .top-dashboard-section .row {
+        row-gap: 40px;
+    }
+    .top-dashboard-inner_box  .number-box {
+        flex-wrap: wrap;
+    }
+    .top-dashboard-inner_box  .number-box .text {
+        width: 100%;
+        margin-top: 10px;
+    }
+    table tr td, 
+    table tr th { 
+        white-space: nowrap;
+    }
+    .form-select {
+        font-size: 14px !important;
+    }
+}
+
+
+@media only screen and (max-width:991px) {
+    .user-info-chart .user-info-left, .user-info-chart .user-info-right {
+        padding: 20px;
+    }
+    .number-of-user h4 {
+        font-size: 26px;
+        line-height: 36px;
+    }
+    .number-of-user h4 span {
+        font-size: 29px;
+    }
+    .number-of-user, .user-info-chart-select {
+        width: 100%;
+    }
+    .user-info-left-top {
+        flex-wrap: wrap;
+    }
+    .user-info-chart-select .form-control {
+        max-width: 100%;
+        margin-left: 0;
+    }
+    .no-sponsors-chart canvas {
+        height: 270px !important;
+        width: 270px !important;
+        margin: 0 auto;
+    }
+    .average-donation p {
+        font-size: 14px;
+        line-height: 30px;
+    }
+    .average-donation span {
+        font-size: 22px;
+        line-height: 30px;
+    }
+    .admin-users-table table tr td, 
+    .admin-users-table table tr th, 
+    .user-group-table table tr td, 
+    .user-group-table table tr th,
+    .users-table table tr td, 
+    .users-table table tr th, 
+    .corporate-users-table table tr td, 
+    .corporate-users-table table tr th,
+    table tr td, 
+    table tr th { 
+        white-space: nowrap;
+    }
+    .ds_pro_detail_nav ul li a, .project-tabing ul#pills-tab li .nav-link {
+        padding: 10px;
+        font-size: 14px;
+        line-height: 24px;
+    }
+}
+
+@media only screen and (max-width:767px) {
+    .ds_pro_detail_nav ul, .project-tabing ul#pills-tab {
+        gap: 16px;
+    }
+    .sub-title {
+        font-size: 20px;
+        line-height: 22px;
+        margin-bottom: 18px;
+    }
+    .pro_media_tab ul {
+        gap: 10px;
+    }
+    .pro_media_tab ul li .nav-link {
+        padding: 10px 10px;
+        font-size: 14px;
+    }
+}
+

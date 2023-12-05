@@ -1,0 +1,517 @@
+<div class="inner-bnnare bg-background" style="background-image: url(./assets/images/inner-banner.jpg);">
+    <div class="container">
+        <div class="inner-bnnare-title">
+            <a routerLink="/home"><strong>Home</strong></a>
+            <h1>Start A Project</h1>
+        </div>
+    </div>
+</div>
+
+<!-- project-add   -->
+<fieldset *ngIf="step == 1">
+    <div class="project-main">
+        <div class="container">
+
+            <form #form="ngForm" [formGroup]="projectBasicDetails">
+                <div class="project-add-section">
+
+                    <div class="project-add-box">
+                        <h4 class="pro-sub-title">Which kind of Project you want to add?</h4>
+
+                        <div class="select_pro__top">
+                            <div class="select-pro-btn">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="New" value="1"
+                                        formControlName="project_type" checked>
+                                    <label class="form-check-label" for="New">
+                                        <span class="material-symbols-outlined">
+                                            add_circle
+                                        </span> New
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="2"
+                                        formControlName="project_type" id="Existing">
+                                    <label class="form-check-label" for="Existing">
+                                        <span class="material-symbols-outlined">
+                                            deployed_code
+                                        </span> Existing
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="3"
+                                        formControlName="project_type" id="Emergency-Relief">
+                                    <label class="form-check-label" for="Emergency-Relief">
+                                        <span class="material-symbols-outlined">
+                                            bolt
+                                        </span> Emergency Relief
+                                    </label>
+                                </div>
+                            </div>
+                            <div *ngIf="project_basic_step && projectBasicDetails.controls.project_type.errors"
+                                class="text-danger">
+                                <div *ngIf="projectbasic.project_type.errors?.required">Project type is required</div>
+                            </div>
+                        </div>
+                        <div class="project-add-form">
+
+                            <div class="input-group">
+                                <input type="text" placeholder="Project Name" formControlName="title"
+                                    class="form-control">
+                                <div *ngIf="project_basic_step && projectBasicDetails.controls.title.errors"
+                                    class="text-danger">
+                                    <div *ngIf="projectbasic.title.errors?.required">Project name is required</div>
+                                    <div *ngIf="projectbasic.title.errors?.maxlength">Please enter max 250 characters</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <select formControlName="category_id"
+                                            class="form-control form-select-design cursor-pointer" cSelect>
+                                            <option selected="selected" value="">Please choose project category</option>
+                                            <option *ngFor="let category of categories" [value]="category.id">{{
+                                                category.name }}</option>
+                                        </select>
+                                        <div *ngIf="project_basic_step && projectBasicDetails.controls.category_id.errors"
+                                            class="text-danger">
+                                            <div *ngIf="projectbasic.category_id.errors?.required">Please select
+                                                category
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <ngx-bootstrap-multiselect [options]="myProjectTypeOptions" [texts]="myTexts"
+                                            [settings]="mySettings" formControlName="project_donation_type"
+                                            class="multiselect" (ngModelChange)="hideShowField($event)">
+                                        </ngx-bootstrap-multiselect>
+                                        
+                                        <div *ngIf="project_basic_step && projectBasicDetails.controls.project_donation_type.errors"
+                                            class="text-danger">
+                                            <div *ngIf="projectbasic.project_donation_type.errors?.required">Project
+                                                donation type is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="input-group price-icon" [hidden]="!isDonation">
+                                <input type="number" placeholder="Amount to be raised($)"
+                                    formControlName="amount" class="form-control">
+                                <div *ngIf="project_basic_step && projectBasicDetails.controls.amount.errors"
+                                    class="text-danger">
+                                    <div *ngIf="projectbasic.amount.errors?.required">Project amount is required</div>
+                                    <div *ngIf="projectbasic.amount.pattern?.required">Amount is invalid.</div>
+                                    <div *ngIf="projectBasicDetails.controls.amount.errors.pattern">Invalid project amount format</div>
+                                    <div *ngIf="projectBasicDetails.controls.amount.errors.priceLimit">Project amount must be between 1 and 1000000000</div>
+                                </div>
+                            </div>
+                            <div class="input-group price-icon" [hidden]="!isVolunteer">
+                                <input type="number" placeholder="Number of Volunteer" onkeydown="if(event.key==='.' || event.key==='e'){event.preventDefault();}" 
+                                    formControlName="volunteer" class="form-control">
+                                <div *ngIf="project_basic_step && projectBasicDetails.controls.volunteer.errors"
+                                    class="text-danger">
+                                    <div *ngIf="projectbasic.volunteer.errors?.required">Project volunteer is required</div>
+                                    <div *ngIf="projectbasic.volunteer.pattern?.required">Project volunteer is invalid.</div>
+                                    <div *ngIf="projectBasicDetails.controls.volunteer.errors.priceLimit">Project volunteer must be between 1 and 10000</div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <textarea name="" id="" cols="30" rows="10" placeholder="Description"
+                                    class="form-control" formControlName="description"></textarea>
+                                <div *ngIf="project_basic_step && projectBasicDetails.controls.description.errors"
+                                    class="text-danger">
+                                    <div *ngIf="projectbasic.description.errors?.required">Description is required</div>
+                                    <div *ngIf="projectbasic.description.errors?.maxlength">Maximum 500 characters are allowed.</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="city"
+                                            placeholder="City Name" (input)="capitalizeFirstLetter($event)"/>
+                                        <div *ngIf="project_basic_step && projectBasicDetails.controls.city.errors"
+                                            class="text-danger">
+                                            <div *ngIf="projectbasic.city.errors?.required">City is required</div>
+                                            <div *ngIf="projectbasic.city.errors?.maxlength">Maximum 50 characters are allowed.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <select #countryList id="country" type="text" cFormControl formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': personal_step && personal['phone_code'].errors }">
+                                            <option value="">Please choose your country</option>
+                                            <option *ngFor="let country of countries" [value]="country.id">{{
+                                                country.name }}</option>
+                                        </select>
+                                        <div *ngIf="project_basic_step && projectBasicDetails.controls.country.errors"
+                                            class="text-danger">
+                                            <div *ngIf="projectbasic.country.errors?.required">Country is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" placeholder="Project Website" formControlName="project_url"
+                                    class="form-control">
+                            </div>
+                            <div class="project-sdgs">
+                                <label>Select Project SDGs 
+                                </label>
+                                <div class="input-group">
+                                    <ngx-bootstrap-multiselect [options]="mySdgOptions" [texts]="mySdgTexts"
+                                        [settings]="mySdgSettings" formControlName="sdg_ids"
+                                        class="multiselect"></ngx-bootstrap-multiselect>
+                                    <div *ngIf="project_basic_step && projectBasicDetails.controls.sdg_ids.errors"
+                                        class="text-danger">
+                                        <div *ngIf="projectbasic.sdg_ids.errors?.required">Sdgs is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- project-footer -->
+                <div class="project-footer">
+                    <ul>
+                        <li class="active"><span></span> </li>
+                        <li><span></span> </li>
+                        <li><span></span> </li>
+                    </ul>
+                    <div class="btn-section">
+                        <input (click)="next()" type="button" name="next" class="btn btn-green" value="Next" />
+                        <a href="/user/projects/list" class="btn btn-back">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</fieldset>
+
+<!-- Project-Media -->
+<fieldset *ngIf="step == 2">
+    <div class="project-main">
+        <div class="container">
+            <form action="">
+                <div class="project-media">
+                    <h4 class="pro-sub-title">Project Media</h4>
+                    <div class="project-media-box">
+                        <div class="row">
+                            <div class="col-lg-6 col-12">
+                                <div class="media-images">
+                                    <span class="media-title">
+                                        <span class="material-symbols-sharp">imagesmode</span>
+                                        images
+                                    </span>
+                                    <div class="cover-image-media">
+                                        <div *ngIf="this.coverImage" class="media-item-cover">
+                                            <a [href]="this.coverImage" data-fancybox
+                                                data-caption="Caption for single image" class="media-cover-item-link">
+                                                <img [src]="this.coverImage" alt="" />
+                                            </a>
+                                            <button type="button" class="btn remove-circle"
+                                                (click)="removeCoverImage(projectDetails.project_id)"><i
+                                                    class="far fa-times-circle"></i></button>
+                                        </div>
+                                        <div *ngIf="!this.coverImage" class="media-upload">
+                                            <span class="material-symbols-sharp">
+                                                add_circle
+                                            </span>
+                                            <input type="file" #coverInput (change)="uploadCoverImage($event,'cover_image')"
+                                                name="image" accept="image/*" />
+                                            <div *ngIf="coverFileValid==false" class="text-danger">
+                                                <div>Supported image types are {{ fileImgTypeSupport }}</div>
+                                            </div>
+                                            <div *ngIf="coverImageValid==false" class="text-danger">
+                                                <div>Project cover image is required</div>
+                                            </div>
+                                            <span class="cover-text">Cover Image</span>
+                                        </div>
+                                    </div>
+                                    <div class="media-list">
+                                        <div *ngFor="let image of images; let i = index;" class="media-item">
+                                            <a [href]="image.document" data-fancybox
+                                                data-caption="Caption for single image" class="media-item-link">
+                                                <img [src]="image.document" alt="" />
+                                            </a>
+                                            <button type="button" class="btn remove-circle"
+                                                (click)="removeImage(image.id,i,'image')"><i
+                                                    class="far fa-times-circle"></i></button>
+                                        </div>
+                                        <div class="media-upload">
+                                            <span class="material-symbols-sharp">
+                                                add_circle
+                                            </span>
+                                            <input type="file" #imageInput (change)="uploadDocument($event,'image')" name="image"
+                                                accept="image/*" />
+                                            <div *ngIf="imageFileValid==false" class="text-danger">
+                                                <div>Supported image types are {{ fileImgTypeSupport }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media-video">
+                                    <span class="media-title">
+                                        <span class="material-symbols-outlined">
+                                            theaters
+                                        </span>
+                                        Videos
+                                    </span>
+                                    <div class="media-list">
+                                        <div *ngFor="let video of videos; let v = index;" class="media-item">
+                                            <a [href]="video.document" data-fancybox
+                                                data-caption="Caption for single image">
+                                                <video [src]="video.document"></video>
+                                                <div class="video-icon">
+                                                    <span class="material-symbols-outlined ">
+                                                        play_arrow
+                                                    </span>
+                                                </div>
+                                            </a>
+                                            <button type="button" class="btn remove-circle"
+                                                (click)="removeImage(video.id,v,'video')"><i
+                                                    class="far fa-times-circle"></i></button>
+                                        </div>
+
+                                        <div *ngIf="videoFileValid==false" class="text-danger">
+                                            <div>Supported video types are {{ fileVidTypeSupport }}</div>
+                                        </div>
+                                        <div class="media-upload">
+                                            <span class="material-symbols-sharp">
+                                                add_circle
+                                            </span>
+                                            <input type="file" #videoInput (change)="uploadDocument($event,'video')" name="image"
+                                                accept="video/*" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <div class="media-document">
+                                    <span class="media-title">
+                                        <span class="material-symbols-outlined">
+                                            description
+                                        </span>
+                                        Documents
+                                    </span>
+                                    <div class="media-document-box">
+                                        <div *ngFor="let document of documents; let d = index;"
+                                            class="media-document-item">
+                                            <!-- input fields inside the *ngFor -->
+
+
+                                            <span class="material-symbols-outlined doc-icon">
+                                                import_contacts </span>
+                                            <a [href]="document.document" data-fancybox
+                                                data-caption="Caption for single image"><strong>{{
+                                                    document.document_name }}</strong></a>
+                                            <span class="delete" (click)="removeImage(document.id,d,'document')">
+                                                <i class="far fa-trash-alt"></i>
+                                            </span>
+
+                                        </div>
+                                        <div class="media-document-upload">
+                                            <input type="file" #documentInput (change)="uploadDocument($event,'document')" name="image"
+                                                accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                                text/plain, application/pdf" />
+                                            <span>Add new document</span>
+                                        </div>
+                                        <div *ngIf="docFileValid==false" class="text-danger">
+                                            <div>Supported documents types are {{ fileDocTypeSupport }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- project-footer   -->
+                <div class="project-footer">
+                    <ul>
+                        <li class="active"><span></span> </li>
+                        <li class="active"><span></span> </li>
+                        <li><span></span> </li>
+                    </ul>
+                    <div class="btn-section">
+                        <input (click)="next()" type="button" name="next" class="btn btn-green" value="Next" />
+                        <input (click)="previous()" type="button" name="previous" class="btn btn-back"
+                            value="Previous" />
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</fieldset>
+
+<!-- Verify Project Details -->
+<fieldset *ngIf="step == 3">
+    <div class="project-main">
+        <div class="container">
+            <form action="">
+                <div class="verify-project">
+                    <h4 class="pro-sub-title">Verify Project Details</h4>
+                    <div class="verify-project-box">
+                        <div class="row">
+                            <div class="col-lg-6 col-12">
+                                <div class="pro-information">
+                                    <h4 class="sub-title">Project Information</h4>
+                                    <div class="pro-info-box">
+                                        <div class="info-item">
+                                            <span>Project Kind</span>
+                                            <strong>{{ projectDetails.project_type == 1 ? 'New' :
+                                                projectDetails.project_type == 2 ? 'Existing' : 'Emergency Relief'
+                                                }}</strong>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Project Name</span>
+                                            <strong>{{ projectDetails.title }}</strong>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Category</span>
+                                            <strong>{{ projectDetails.category_name }}</strong>
+                                        </div>
+                                        <div class="info-item" *ngIf="projectDetails.amount">
+                                            <span>Amount to be raised</span>
+                                            <strong>${{ projectDetails.amount }}</strong>
+                                        </div>
+                                        <div class="info-item" *ngIf="projectDetails.volunteer">
+                                            <span>Number of Volunteers</span>
+                                            <strong>{{ projectDetails.volunteer }}</strong>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Project Description</span>
+                                            <strong>{{ projectDetails.description }}</strong>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="info-item">
+                                                    <span>Country</span>
+                                                    <strong>{{ countryName }}</strong>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="info-item">
+                                                    <span>City</span>
+                                                    <strong>{{ projectDetails.city }}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Project Website</span>
+                                            <strong>{{ projectDetails.project_url }}</strong>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Project SDG</span>
+                                            <strong>{{ projectDetails.sdgName }}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <div class="pro_media_right">
+                                    <h4 class="sub-title">Project Media</h4>
+                                    <div class="pro_media_tab">
+                                        <ul class="nav nav-pills mb-4" id="pro-tab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="images-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#images" type="button" role="tab"
+                                                    aria-controls="images" aria-selected="true"> <span
+                                                        class="material-symbols-sharp">imagesmode</span> Images</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="documents-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#documents" type="button" role="tab"
+                                                    aria-controls="documents" aria-selected="false"><span
+                                                        class="material-symbols-outlined"> description </span>
+                                                    Documents</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="videos-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#videos" type="button" role="tab"
+                                                    aria-controls="videos" aria-selected="false"><span
+                                                        class="material-symbols-outlined"> theaters
+                                                    </span> Videos</button>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="pro-tabContent">
+                                            <div class="tab-pane fade show active" id="images" role="tabpanel"
+                                                aria-labelledby="images-tab">
+                                                <div class="media-list">
+                                                    <div *ngIf="projectDetails.default_image_name"
+                                                        class="media-item cover-image-border">
+                                                        <a [href]="projectDetails.default_image" data-fancybox
+                                                            data-caption="">
+                                                            <img [src]="projectDetails.default_image" alt="" />
+                                                        </a>
+                                                    </div>
+                                                    <div *ngFor="let image of images; let i = index;"
+                                                        class="media-item">
+                                                        <a [href]="image.document" data-fancybox data-caption="">
+                                                            <img [src]="image.document" alt="" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="documents" role="tabpanel"
+                                                aria-labelledby="documents-tab">
+                                                <div class="media-document-box">
+                                                    <div *ngFor="let document of documents; let v = index;">
+                                                        <div class="media-document-item">
+
+                                                            <span class="material-symbols-outlined doc-icon">
+                                                                import_contacts </span>
+                                                            <a target="_blank" [download]="document.document"
+                                                                [href]="document.document">
+                                                                <strong>{{ document.document_name }}</strong>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="videos" role="tabpanel"
+                                                aria-labelledby="videos-tab">
+                                                <div class="media-list">
+                                                    <div *ngFor="let video of videos; let v = index;">
+                                                        <a [href]="video.document" data-fancybox data-caption="">
+                                                            <div class="media-item">
+                                                                <video [src]="video.document"></video>
+                                                                <div class="video-icon">
+                                                                    <span class="material-symbols-outlined ">
+                                                                        play_arrow
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- project-footer   -->
+                <div class="project-footer">
+                    <ul>
+                        <li class="active"><span></span> </li>
+                        <li class="active"><span></span> </li>
+                        <li class="active"><span></span> </li>
+                    </ul>
+                    <div class="btn-section">
+                        <button (click)="submit()" class="btn btn-green">Submit</button>
+                        <input (click)="previous()" type="button" name="previous" class="btn btn-back"
+                            value="Previous" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</fieldset>

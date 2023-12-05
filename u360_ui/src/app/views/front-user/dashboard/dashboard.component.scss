@@ -1,0 +1,43 @@
+:host {
+  .legend {
+    small {
+      font-size: x-small;
+    }
+  }
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute-center {
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text-center{
+  text-align: center;
+}
+
+.pupil-dashboard {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.red {
+  background-color: red;
+}
+
+.amber {
+  background-color:rgb(252,212,178);
+}
+
+.magento {
+  background-color:rgb(255,192,0);
+}
+
+.chartjs-tooltip{
+  position: absolute;
+}

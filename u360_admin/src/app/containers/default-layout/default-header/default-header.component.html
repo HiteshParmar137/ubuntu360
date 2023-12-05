@@ -1,0 +1,40 @@
+<ng-container>
+  <c-container [fluid]="true">
+    <button toggle="visible" cHeaderToggler [cSidebarToggle]="sidebarId">
+      <svg cIcon name="cilMenu" size="xxl"></svg>
+    </button>
+    <c-header-nav class="ms-3">
+      <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
+    </c-header-nav>
+  </c-container>
+</ng-container>
+
+<ng-template #userDropdown>
+  <div class="d-flex align-items-center">
+    <div class="user-name"><strong>Admin12</strong></div>
+    <c-dropdown alignment="end" variant="nav-item">
+      <button cButton color="" [caret]="false" cDropdownToggle class="py-0 bg-transparent user-btn postion-relative rounded-0">
+        <c-avatar cTextColor="primary"  class="user-text text-theme-color bg-transparent" size="md" src={{userProfile}} status="success" class="avatar avatar-md rounded-1 text-primary">
+          <img _ngcontent-ylw-c48="" class="avatar-img" src="./assets/images/profile-img.png">
+        </c-avatar>      
+      </button>
+      <ul cDropdownMenu class="pt-0 pr-5 w-auto">
+        <li>
+          <a class="nav-link" routerLink="/user-profile" cDropdownItem>
+            <svg cIcon class="me-2" name="cilUser"   routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"></svg>
+            Edit Profile
+          </a>
+          <a class="nav-link" routerLink="/change-password" cDropdownItem>
+            <svg cIcon class="me-2" name="cilPencil"   routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"></svg>
+            Change Password
+          </a>
+          <a class="nav-link" (click)="authService.logout()" cDropdownItem>
+            <svg cIcon class="me-2" name="cilLockLocked"></svg>
+            Logout
+          </a> 
+        </li>
+        <li></li>
+      </ul>
+    </c-dropdown>
+  </div>
+</ng-template>

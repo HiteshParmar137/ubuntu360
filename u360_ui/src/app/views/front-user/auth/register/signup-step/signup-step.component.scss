@@ -1,0 +1,4 @@
+.check_circle-item .form-check-input:checked {
+    background-color: attr(data-color);
+    border-color: attr(data-color);
+}

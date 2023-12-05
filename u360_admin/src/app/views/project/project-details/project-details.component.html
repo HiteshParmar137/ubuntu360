@@ -1,0 +1,370 @@
+<div class="page-content" style="min-height: 659px">
+    <div class="mx-md-3 top-button-box">
+        <div class="row pb-2">
+            <div class="col-6">
+                <div *ngIf="projectDetails.status=='Pending'">
+                    <button (click)="approveProject()" class="btn btn-success">Approve</button>
+                    <button (click)="open(mymodal)" class="btn btn-danger ml-10">Reject</button>
+                </div>
+                
+            </div>
+            <div class="col-6">
+                <div class="text-end">
+                    <button (click)="goBack()" class="btn btn-secondary inline-btn">Back</button>
+                </div>        
+            </div>
+        </div>
+    </div>
+    
+    <div class="portlet box yellow-crusta float-none content-box my-md-4 mx-md-3 border-0">
+        <div class="portlet-body form bg-transparent p-0 border-0 project-tabing">
+            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-details-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-details" type="button" role="tab" aria-controls="pills-details"
+                        aria-selected="true">Details</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-followers-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-followers" type="button" role="tab" aria-controls="pills-followers"
+                        aria-selected="false">Followers</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-donation-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-donation" type="button" role="tab" aria-controls="pills-donation"
+                        aria-selected="false">Donation</button>
+                </li>
+                <li class="nav-item" role="presentation" *ngIf="projectDetails.volunteer > 0">
+                    <button class="nav-link" id="pills-volunteer-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-volunteer" type="button" role="tab" aria-controls="pills-volunteer"
+                        aria-selected="false">Volunteers</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-details" role="tabpanel"
+                    aria-labelledby="pills-details-tab">
+                    <fieldset>
+                        <form action="">
+                            <div class="verify-project padding_left_right">
+                                <div class="verify-project-box">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-12">
+                                            <div class="pro-information">
+                                                <h5 class="sub-title">Project Information</h5>
+                                                <div class="pro-info-box">
+                                                    <div class="info-item">
+                                                        <h6><b>Project Kind</b></h6>
+                                                        <span>{{ projectDetails.project_type == 10 ? 'New' :
+                                                            projectDetails.project_type == 2 ? 'Existing' :
+                                                            'Emergency Relief'
+                                                            }}</span>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <h6><b>Project Name</b></h6>
+                                                        <span>{{ projectDetails.title }}</span>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <h6><b>User Name</b></h6>
+                                                        <span>{{ projectDetails.user }}</span>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <h6><b>Email</b></h6>
+                                                        <span>{{ projectDetails.email }}</span>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <h6><b>Contact Number</b></h6>
+                                                        <span>{{ projectDetails.contact_number }}</span>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <h6><b>Category</b></h6>
+                                                        <span>{{ projectDetails.category_name }}</span>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <h6><b>Amount</b></h6>
+                                                        <span>${{ projectDetails.amount }}</span>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <h6><b>Donation Amount</b></h6>
+                                                        <span>${{ projectDetails.totalAmount }}</span>
+                                                    </div>
+                                                    <div class="info-item" *ngIf="projectDetails.volunteer!=''">
+                                                        <h6><b>Number of Volunteers</b></h6>
+                                                        <span>{{ projectDetails.volunteer }}</span>
+                                                    </div>
+                                                    <div class="info-item" *ngIf="projectDetails.volunteer!=''">
+                                                        <h6><b>Joined Volunteers</b></h6>
+                                                        <span>{{ projectDetails.totalVolunteer }}</span>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <h6><b>Project Description</b></h6>
+                                                        <span>{{ projectDetails.description }}</span>
+                                                    </div>
+                                                    
+                                                    <div class="info-item" *ngIf="projectDetails.project_url">
+                                                        <h6><b>Project Website</b></h6>
+                                                        <span>{{ projectDetails.project_url }}</span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="info-item">
+                                                                <h6><b>Country</b></h6>
+                                                                <span>{{ countryName }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="info-item">
+                                                                <h6><b>City</b></h6>
+                                                                <span>{{ projectDetails.city }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="info-item">
+                                                                <h6><b>Project Kind</b></h6>
+                                                                <span>{{ projectDetails.project_type == 1 ? 'New' :
+                                                                    projectDetails.project_type == 2 ? 'Existing' : 'Emergency Relief'
+                                                                    }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="info-item">
+                                                                <h6><b>Project Name</b></h6>
+                                                                <span>{{ projectDetails.title }}</span>
+                                                            </div>
+                                                            <div class="info-item">
+                                                                <h6><b>Category</b></h6>
+                                                                <span>{{ projectDetails.category_name }}</span>
+                                                            </div>
+                                                            <div class="info-item">
+                                                                <h6><b>Amount to be raised / Number of Volunteers</b></h6>
+                                                                <span>${{ projectDetails.amount }}</span>
+                                                            </div>
+                                                            <div class="info-item">
+                                                                <h6><b>Project Description</b></h6>
+                                                                <span>{{ projectDetails.description }}</span>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="info-item">
+                                                                        <h6><b>Country</b></h6>
+                                                                        <span>{{ projectDetails.country }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="info-item">
+                                                                        <h6><b>City</b></h6>
+                                                                        <span>{{ projectDetails.city }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="info-item">
+                                                                <h6><b>Project SDG</b></h6>
+                                                                <span>{{ projectDetails.sdgName }}</span>
+                                                            </div>
+                                                            <div class="info-item">
+                                                                <button (click)="goBack()" class="btn default">Back</button>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="info-item">
+                                                        <h6><b>Project SDG</b></h6>
+                                                        <span>{{ projectDetails.sdgName }}</span>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <h6><b>Project Status</b></h6>
+                                                        <span>{{ projectDetails.status }}</span>
+                                                    </div>
+                                                    <div class="info-item" *ngIf="projectDetails.status=='Rejected'">
+                                                        <h6><b>Reject Reason</b></h6>
+                                                        <span *ngFor="let rejectReason of projectDetails.reject_reason;">{{ rejectReason.comment }}</span>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="pro_media_right">
+                                                <h5 class="sub-title">Project Media</h5>
+                                                <div class="pro_media_tab">
+                                                    <ul class="nav nav-pills mb-4" id="pro-tab" role="tablist">
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link active" id="images-tab"
+                                                                data-bs-toggle="pill" data-bs-target="#images"
+                                                                type="button" role="tab" aria-controls="images"
+                                                                aria-selected="true">
+                                                                <!-- <span class="material-symbols-sharp">imagesmode</span>  -->
+                                                                Images</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link" id="documents-tab"
+                                                                data-bs-toggle="pill"
+                                                                data-bs-target="#documents" type="button"
+                                                                role="tab" aria-controls="documents"
+                                                                aria-selected="false">
+                                                                <!-- <span class="material-symbols-outlined"> description </span> -->
+                                                                Documents</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link" id="videos-tab"
+                                                                data-bs-toggle="pill" data-bs-target="#videos"
+                                                                type="button" role="tab" aria-controls="videos"
+                                                                aria-selected="false">
+                                                                <!-- <span class="material-symbols-outlined"> theaters</span> -->
+                                                                Videos</button>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content" id="pro-tabContent">
+                                                        <div class="tab-pane fade show active" id="images"
+                                                            role="tabpanel" aria-labelledby="images-tab">
+                                                            <div class="media-list">
+                                                                <div *ngIf="projectDetails.default_image_name"
+                                                                    class="media-item cover-image-border">
+                                                                    <a [href]="projectDetails.default_image"
+                                                                        data-fancybox data-caption="">
+                                                                        <img [src]="projectDetails.default_image"
+                                                                            alt="" />
+                                                                    </a>
+                                                                </div>
+                                                                <div *ngFor="let image of images; let i = index;"
+                                                                    class="media-item">
+                                                                    <a [href]="image.document" data-fancybox
+                                                                        data-caption="">
+                                                                        <img [src]="image.document" alt="" />
+                                                                    </a>
+                                                                </div>
+                                                                <p *ngIf="projectDetails.default_image_name=='' && isImagesEmpty">Image is not uploaded</p>
+                                                                
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="tab-pane fade" id="documents"
+                                                            role="tabpanel" aria-labelledby="documents-tab">
+                                                            <div class="media-document-box">
+                                                                <div
+                                                                    *ngFor="let document of documents; let v = index;">
+                                                                    <div class="media-document-item mb-3">
+
+                                                                        <span _ngcontent-tyg-c322=""
+                                                                            class="material-symbols-outlined doc-icon">
+                                                                            import_contacts </span>
+                                                                        <a target="_blank"
+                                                                            [download]="document.document"
+                                                                            [href]="document.document">
+                                                                            <strong>{{ document.document_name
+                                                                                }}</strong>
+                                                                        </a>
+                                                                    </div>
+                                                                   
+                                                                </div>
+                                                                <p *ngIf="isdocumentsEmpty">Document is not uploaded</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="videos" role="tabpanel"
+                                                            aria-labelledby="videos-tab">
+                                                            <div class="media-list">
+                                                                <div *ngFor="let video of videos; let v = index;">
+                                                                    <a [href]="video.document" data-fancybox data-caption="">
+                                                                        <div class="media-item">
+                                                                            <!-- <img src="{{video.image}}" alt=""> -->
+                                                                            <video [src]="video.document"></video>
+                                                                            <div class="video-icon">
+                                                                                <span class="material-symbols-outlined ">
+                                                                                    play_arrow
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                                <p *ngIf="isVideosEmpty">Video is not uploaded</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="tab-pane fade" id="videos" role="tabpanel"
+                                                            aria-labelledby="videos-tab">
+                                                            <div class="media-list">
+                                                                <div
+                                                                    *ngFor="let video of videos; let v = index;">
+                                                                    <a [href]="video.document" data-fancybox
+                                                                        data-caption="">
+                                                                        <div class="media-item">
+                                                                            <img src="./assets/images/default-image.jpg"
+                                                                                alt="">
+                                                                            <div class="video-icon">
+                                                                                <span
+                                                                                    class="material-symbols-outlined ">
+                                                                                    play_arrow
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- project-footer   -->
+                            <div class="project-footer">
+                                <!-- <ul>
+                                    <li class="active"><span></span> </li>
+                                    <li class="active"><span></span> </li>
+                                    <li class="active"><span></span> </li>
+                                </ul> -->
+                                <div class="btn-section">
+                                    <!-- <button (click)="submit()" class="btn btn-green">Submit</button>
+                                    <input (click)="previous()" type="button" name="previous" class="btn btn-back"
+                                        value="Previous" /> -->
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
+                </div>
+                <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
+                    <app-followers></app-followers>
+                </div>
+                <div class="tab-pane fade" id="pills-donation" role="tabpanel" aria-labelledby="pills-donation-tab">
+                    <app-donations></app-donations>
+                </div>
+                <div class="tab-pane fade" id="pills-volunteer" role="tabpanel" aria-labelledby="pills-donation-tab">
+                    <app-volunteer></app-volunteer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal HTML -->
+<ng-template #mymodal let-modal>
+    <div class="review-modal">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Comment on rejection </h4>
+            <button #closebutton id="closebutton" type="button" class="close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="rejectForm" (ngSubmit)="rejectProject()" class="login-form">
+                <input type="hidden" cFormCheckInput [value]="" formControlName="project_id" />                
+                <div class="input-group">
+                    <textarea cols="30" rows="10" placeholder="Comment..." class="form-control"
+                        formControlName="comment"></textarea>
+                    
+                </div>
+                <div *ngIf="submitted && rejectFormControls['comment'].errors" class="text-danger">
+                    <div *ngIf="rejectFormControls['comment'].errors['required']">Comment is required</div>
+                    <div *ngIf="rejectFormControls['comment'].errors['maxlength']">Please enter max 250 characters</div>
+                </div>
+                <div class="review-modal-btn mt-3">
+                    <button class="btn btn-success ">submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>

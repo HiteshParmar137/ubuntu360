@@ -1,0 +1,133 @@
+
+
+
+<div class="community-page">
+    <div class="container">
+        <div class="row">
+           
+            <div class="col-lg-8 col-12 right">
+                <div class="community-inner-right">
+                    <div class="post-listing">
+                        <!-- loop  -->
+                        <div class="post-list-box" *ngFor="let community of finalResponseCommunity;let i = index">
+                            <strong class="community-pro-title">
+                                {{community.project_title}}
+                            </strong>
+
+                            <div class="post-list-main_item">
+                                <!-- item -->
+                                <div class="post-list-item" [ngClass]="{
+                                    'bg-green': community.type && community.type == 1,
+                                    'bg-blue': community.type && community.type == 2,
+                                    '': community.type && community.type == 0
+                                    }">
+                                    <div class="post-list-img-icon">
+                                        <img [src]="community.user.image" alt=""
+                                            *ngIf="community.user.image && community.user.image != ''">
+                                        <img src="./assets/images/profile-img.png" alt=""
+                                            *ngIf="community.user.image == ''">
+                                    </div>
+                                    <div class="post-list-contant">
+                                        <h6>{{community.user.name}}</h6>
+                                        <h5 *ngIf="community.type == 1">{{ community.donation_amount }}</h5>
+                                        <h5 *ngIf="community.type == 2">{{ community.volunteer_title }}</h5>
+                                        <p>{{community.comment}}</p>
+                                        <div class="post-list-video" *ngIf="community.document_type && community.document_type == 'video' && community.document != ''">
+                                            <!-- <img [src]="community.document" alt=""> -->
+                                            <!-- <video [src]="community.document"></video> -->
+                                            <a [href]="community.document" data-fancybox
+                                                    data-caption="Caption for single image">
+                                                    <video [src]="community.document" *ngIf="community.document && community.document != ''"></video>
+                                                    <div class="video-icon">
+                                                        <span class="material-symbols-outlined ">
+                                                            play_arrow
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                        </div>
+                                        <div class="post-list-image" *ngIf="community.document_type && community.document_type == 'image'">
+                                            <img [src]="community.document" alt="" *ngIf="community.document && community.document != ''">
+                                        </div>
+                                        <div class="post-list-footer">
+                                            <div class="post-comment" (click)="hideShowCommentBox(i)">
+                                                <span>
+                                                    <i class="far fa-comment"></i>
+                                                </span>
+                                                <strong>{{community.comment_count}}</strong>
+                                            </div>
+                                            <div class="post-like">
+                                                <span>
+                                                    <a
+                                                        (click)="likeUnlike(community.project_community_id, community.project_id,community.is_like == '0' ? 'like' : 'unlike',$event, i)">
+                                                        <i class="fa-heart" [ngClass]="{
+                                                                'far':community.is_like == '0',
+                                                                'fas':community.is_like == '1'
+                                                            }"></i>
+                                                        <!-- <i class="fas fa-heart" *ngIf="community.is_like == '1'"></i> -->
+                                                    </a>
+                                                </span>
+                                                <strong>{{community.like_count}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- comments -->
+                                <div class="post-list-item-comment-container" *ngIf="showComment[i] == true">
+                                    <div class="comment_inner_box">
+                                        <!-- form   -->
+                                        <div class="comment-form" *ngIf="this.userId">
+                                            <div class="comment-form-icon">
+                                                <img [src]="profile_image" alt="" *ngIf="profile_image && profile_image != ''">
+                                                <img src="../assets/images/profile-img.png" alt="" *ngIf="!profile_image || profile_image == ''">
+                                                <!-- <img src="../assets/images/galley-slider-2.jpg" alt=""> -->
+                                            </div>
+                                            <div class="comment-form-box">
+                                                <form action="" [formGroup]="commentForm">
+                                                    <div class="input-group">
+                                                        <input type="text" placeholder="Write your comment"
+                                                            class="form-control" formControlName="comment">
+                                                        <button
+                                                            (click)="addComment(community.project_community_id,community.project_id, i)">
+                                                            <img src="../assets/images/send-icon.png" alt="">
+                                                        </button>
+                                                    </div>
+                                                    <div *ngIf="commentFormSubmit && commentControl['comment'].errors" class="text-danger">
+                                                        <div *ngIf="commentControl && commentControl['comment'].errors['required']">Comment is required
+                                                        </div>
+                                                        <div *ngIf="commentControl['comment'].errors['maxlength']">Maximum 500 characters are allowed.
+                                                        </div>                                                        
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- comment-item   -->
+                                        <div class="post-list-item" *ngFor="let comment of community.comments;">
+                                            <div class="post-list-img-icon">
+                                                <img [src]="comment.profile_image" alt=""
+                                                    *ngIf="comment.profile_image && comment.profile_image != ''">
+                                                <img src="./assets/images/profile-img.png" alt=""
+                                                    *ngIf="comment.profile_image == ''">
+                                            </div>
+                                            <div class="post-list-contant">
+                                                <h6>{{comment.name}}</h6>
+                                                <p>{{comment.comment}}</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="post-load-more-btn" *ngIf="current_page != last_page">
+                        <a (click)="loadMore()" class="btn btn-outline-green">Load More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

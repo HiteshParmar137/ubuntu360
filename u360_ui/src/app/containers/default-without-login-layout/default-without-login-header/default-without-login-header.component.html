@@ -1,0 +1,131 @@
+<!-- Header -->
+<header class="header">
+    <!-- top-header -->
+    <div class="top-header">
+        <div class="container">
+            <div class="top_header_row">
+                <div class="info-left">
+                    <ul>
+                        <li *ngIf="phone_no!=''">
+                            <a href="tel:{{ phone_no }}"> <i class="fas fa-phone-alt"></i> {{ phone_no }}</a>
+                        </li>
+                        <li *ngIf="email!=''">
+                            <a href="mailto:{{ email }}"> <i class="fas fa-envelope"></i>{{ email }} </a>
+                        </li>
+                        <li *ngIf="whatsapp_no!=''">
+                            <span> <i class="fab fa-whatsapp"></i> {{ whatsapp_no }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="info-social_icon-right">
+                    <ul>
+                        <li *ngIf="twitter!=''">
+                            <a href="{{ twitter }}"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li *ngIf="instagram!=''">
+                            <a href="{{ instagram }}"><i class="fab fa-instagram"></i></a>
+                        </li>
+                        <li *ngIf="facebook!=''">
+                            <a href="{{ facebook }}"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li *ngIf="youtube!=''">
+                            <a href="{{ youtube }}"><i class="fab fa-youtube"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- main-header  -->
+    <div class="main-header">
+        <div class="container">
+            <div class="header-box">
+                <div class="site-logo">
+                    <a routerLink="/home">
+                        <img src="./assets/images/logo.png" alt="">
+                    </a>
+                </div>
+
+                <div class="user-icon-mobile">
+                    <ng-template [ngIf]="authService.isLoggedIn()" [ngIfElse]="userloggedOut">
+                        <span class="user-icon">
+                            <img src="./assets/images/user.png" alt="">
+                        </span>
+                        <div class="logout-dropdown">
+                            <ul>
+                                <li routerLinkActive="active" [routerLink]="['/dashboard']">Dashboard</li>
+                                <li (click)="authService.logout()">Logout</li>
+                            </ul>
+                        </div>
+
+                    </ng-template>
+                    <ng-template #userloggedOut>
+                        <a routerLink="/login" class="login-btn btn btn-green">Login <span><img
+                                    src="./assets/images/login-icon.png" alt=""></span></a>
+                    </ng-template>
+                </div>
+                
+                <div class="burger__menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="site-menu">
+                    <ul>
+                        <li routerLinkActive="active">
+                            <a [routerLink]="['/projects']">Projects</a>
+                        </li>
+                        <li routerLinkActive="active">
+                            <a [routerLink]="['/community']">Community</a>
+                        </li>                        
+                        <li routerLinkActive="active">
+                            <a [routerLink]="['/about-us']">About Us</a>
+                        </li>
+                        <li class="menu-item-children" routerLinkActive="active">
+                            <a href="javascript:void(0)">Take Action</a>
+                            <ul class="sub-menu">
+                                <li routerLinkActive="active">
+                                    <a [routerLink]="['/donate']">Donate </a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a [routerLink]="['/volunteer']">Volunteer </a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a [routerLink]="['/user/projects/add']"> Start Project</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a [routerLink]="['/esg-reports']">ESG Reporting</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <ng-template [ngIf]="authService.isLoggedIn()" [ngIfElse]="userloggedOut">
+                                <span class="user-icon">
+                                    <!-- <img src="./assets/images/user.png" alt=""> -->
+                                    <img [src]="userProfile" alt="" *ngIf="userProfile && userProfile != ''">
+                                    <img src="./assets/images/default-image.jpg" alt="" *ngIf="userProfile == ''">
+                                </span>
+                                <div class="logout-dropdown">
+                                    <ul>
+                                        <li routerLinkActive="active" [routerLink]="['/dashboard']">Dashboard</li>
+                                        <li (click)="authService.logout()">Logout</li>
+                                    </ul>
+                                </div>
+
+                            </ng-template>
+                            <ng-template #userloggedOut>
+                                <a routerLink="/login" class="login-btn btn btn-green">Login <span><img
+                                            src="./assets/images/login-icon.png" alt=""></span></a>
+                            </ng-template>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<!-- End Header  -->

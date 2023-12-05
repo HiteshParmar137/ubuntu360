@@ -1,0 +1,91 @@
+<!-- body  -->
+<div class="login-section" style="background-image:url(./assets/images/login-bg-banner.jpg);">
+    <div class="container">
+        <div class="container_inner_box">
+            <!-- logo  -->
+            <div class="login-box">
+                <div class="logo">
+                    <img src="./assets/images/big-logo.png" alt="">
+                </div>
+            </div>
+
+            <!-- form -->
+            <div class="form-box">
+                <div class="Signup-box">
+                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                        <div class="input-group">
+                            <input cFormControl type="text" formControlName="name" class="form-control"
+                                placeholder="Name" [ngClass]="{ 'is-invalid': isSubmitted && f['name'].errors }" />
+                            <div *ngIf="isSubmitted && f['name'].errors" class="text-danger">
+                                <div *ngIf="f['name'].errors['required']">Name is required</div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input cFormControl type="text" formControlName="email" class="form-control"
+                                placeholder="Email" [ngClass]="{ 'is-invalid': isSubmitted && f['email'].errors }" />
+                            <div *ngIf="isSubmitted && f['email'].errors" class="text-danger">
+                                <div *ngIf="f['email'].errors['required']">Email is required</div>
+                                <div *ngIf="f['email'].errors && f['email'].errors['email']">
+                                    Email is invalid</div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input [type]="showPassword ? 'text' : 'password'" id="password"
+                                class="form-control show_hide_password" placeholder="Password"
+                                [ngClass]="{ 'is-invalid': isSubmitted && f['password'].errors }"
+                                formControlName="password" class="form-control input-custom" id="password"
+                                name="password" />
+                            <span toggle="#password" class="input-group-text password-eye"
+                                [ngClass]="{ 'show': showPassword }" (click)="toggleShowPassword()"><img
+                                    src="./assets/images/eye-icon.png" alt=""></span>
+                            <div *ngIf="isSubmitted && f['password'].errors" class="text-danger">
+                                <div *ngIf="f['password'].errors['required']">
+                                    Password is required
+                                </div>
+                                <div *ngIf="f['password'].errors['pattern']">
+                                    Password must contain more than 8 characters, 1 numeric, 1
+                                    capital letter and 1 special character($@!%*?&).
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirm_password"
+                                class="form-control show_hide_password" placeholder="Confirm Password"
+                                [ngClass]="{'is-invalid': isSubmitted && f['confirm_password'].errors}"
+                                formControlName="confirm_password" class="form-control input-custom"
+                                id="confirm_password" name="confirm_password" />
+                            <span toggle="#confirm_password" class="input-group-text password-eye"
+                                [ngClass]="{ 'show': showConfirmPassword }" (click)="toggleShowConfirmPassword()"><img
+                                    src="./assets/images/eye-icon.png" alt=""></span>
+                            <div *ngIf="isSubmitted && f['confirm_password'].errors" class="text-danger">
+                                <div *ngIf="f['confirm_password'].errors['required']">
+                                    Confirm Password is required
+                                </div>
+                                <div *ngIf="f['confirm_password'].errors['matching']">
+                                    The password confirmation does not match
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-green login__btn">Register</button>
+                    </form>
+                    <!-- social-button  -->
+                    <div class="sing-with-google">
+                        <p class="top-text"><span>Or Sign Up With</span></p>
+                        <div class="sing-with-google-btn">
+                            <button class="facbook-btn" (click)="signInWithFB()" data-bs-toggle="tooltip" ngbTooltip="Facebook sign-up functionality coming soon..." [disabled]="true"><span><img src="./assets/images/facebook.png"
+                                alt=""></span>Facebook</button>
+                            <asl-google-signin-button class="google-iframe" type='standard' text="continue_with"
+                                        shape="rectangular" size='medium'> </asl-google-signin-button>
+                            <button class="google-btn"><span><img src="./assets/images/google.png"
+                                                alt=""></span>Google</button>
+                        </div>
+                        <p class="sing-bottom-text">Have an account? <a [routerLink]="['/login']">Sign In</a></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- body-end -->

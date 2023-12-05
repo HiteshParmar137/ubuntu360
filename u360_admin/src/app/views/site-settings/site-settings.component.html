@@ -1,0 +1,30 @@
+<div class="page-content" style="min-height: 659px">
+    <div class="portlet box blue-steel float-none content-box my-md-4 mx-md-3 border-0">
+      <form [formGroup]="settingForm" (ngSubmit)="onSubmit()">
+        <div class="portlet-body form bg-transparent p-3 border-0">
+          <div class="actions text-end">
+            <!-- <a routerLink="/template-management" class="btn default"><i class="fa-solid fa-chevron-left"></i> Back</a> -->
+          </div>
+          <div class="p-3" *ngFor="let setting of settingArray; let i = index">
+
+            <c-row class="mb-3">
+              <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                {{setting.value}}<span class="required"></span>
+              </label>
+              <c-col [lg]="6">
+                <input type="text" class="form-control" formControlName="{{setting.key}}" placeholder="Enter {{setting.value}}"/>
+              </c-col>
+            </c-row>
+          </div>
+          <div class="form-actions footer-action border-0 fluid">
+            <div class="col-lg-9 col-sm-12 col-xs-12 frm-button">
+              <button class="btn default" type="submit">Save</button>&nbsp;
+              <!-- <button class="btn btn-secondary" type="button" routerLink="/template-management">
+                Cancel
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

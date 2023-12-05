@@ -1,0 +1,34 @@
+[
+    {
+        "name": "Dashboard",
+        "url": "dashboard"
+    },
+    {
+        "name": "Users",
+        "url": "users"
+    },
+    {
+        "name": "Admin Users",
+        "url": "admin-users"
+    },
+    {
+        "name": "User Groups",
+        "url": "user-group"
+    },
+    {
+        "name": "Template Management",
+        "url": "template-management"
+    },
+    {
+        "name": "CMS Management",
+        "url": "cms"
+    },
+    {
+        "name": "Site Settings",
+        "url": "site-settings"
+    },
+    {
+        "name": "Feedback",
+        "url": "feedback"
+    }
+]

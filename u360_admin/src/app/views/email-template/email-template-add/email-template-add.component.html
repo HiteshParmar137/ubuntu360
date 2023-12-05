@@ -1,0 +1,98 @@
+<div class="page-content" style="min-height: 659px">
+    <div class="portlet box blue-steel float-none content-box my-md-4 mx-md-3 border-0">
+      <form [formGroup]="emailTemplateAdd" (ngSubmit)="onSubmit()">
+        <div class="portlet-body form bg-transparent p-3 border-0">
+          <div class="actions text-end">
+            <a routerLink="/templates-management" class="btn btn-secondary"><i class="fa-solid fa-chevron-left"></i> Back</a>
+          </div>
+          <div class="p-3">
+            <c-row class="mb-3">
+              <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                Name<span class="required">*</span>
+              </label>
+              <c-col [lg]="6">
+                <input type="text" class="form-control" formControlName="name"
+                  [ngClass]="{ 'is-invalid': isSubmitted && f['name'].errors }" placeholder="Enter Template Name"/>
+                <div *ngIf="isSubmitted && f['name'].errors" class="text-danger">
+                  <div *ngIf="f['name'].errors['required']">Email template name is required</div>
+                </div>
+              </c-col>
+            </c-row>
+            <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                    Slug<span class="required">*</span>
+                </label>
+                <c-col [lg]="6">
+                    <input type="text" class="form-control" formControlName="slug"
+                    [ngClass]="{ 'is-invalid': isSubmitted && f['slug'].errors }" placeholder="Enter Slug"/>
+                    <div *ngIf="isSubmitted && f['slug'].errors" class="text-danger">
+                    <div *ngIf="f['slug'].errors['required']">Slug is required</div>
+                    </div>
+                </c-col>
+            </c-row>
+            <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                    Template<span class="required">*</span>
+                </label>
+                <c-col [lg]="6">
+                    <ckeditor formControlName="template" [ngClass]="{ 'is-invalid': isSubmitted && f['template'].errors }"></ckeditor>
+                    <!-- <textarea type="text" class="form-control" formControlName="template" maxlength="1000" rows="6"
+                    [ngClass]="{ 'is-invalid': isSubmitted && f['template'].errors }" placeholder="Add Template"></textarea> -->
+                    <div *ngIf="isSubmitted && f['template'].errors" class="text-danger">
+                    <div *ngIf="f['template'].errors['required']">Email template is required</div>
+                    </div>
+                </c-col>
+            </c-row>
+            <c-row class="mb-3">
+              <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Template Type<span class="required">*</span>
+              </label>
+              <c-col [lg]="6">
+                  <select formControlName="template_type"
+                      [ngClass]="{ 'is-invalid': isSubmitted && f['template_type'].errors }"
+                      class="form-control form-select-design" (change)="getTemplateType($event.target.value)" cSelect>
+                      <option selected="selected" value=""> -- Select -- </option>
+                      <option value="Email">Email</option>
+                      <option value="SMS">SMS</option>
+                  </select>
+                  <div *ngIf="isSubmitted && f['template_type'].invalid" class="text-danger">
+                      <div
+                          *ngIf="f['template_type'].errors && f['template_type']errors['required']">
+                          Select template type
+                      </div>
+                  </div>
+              </c-col>
+            </c-row>
+            <c-row class="mb-3">
+              <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start pt-0">
+                  Status
+              </label>
+              <c-col [lg]="6">
+                  <input cFormCheckInput formControlName="status" type="checkbox" />
+              </c-col>
+            </c-row>
+            <c-row class="mb-3" *ngIf="templateValue && templateValue === 'Email'">
+              <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                Subject<span class="required">*</span>
+              </label>
+              <c-col [lg]="6">
+                <input type="text" class="form-control" formControlName="subject"
+                  [ngClass]="{ 'is-invalid': isSubmitted && f['subject'].errors }" placeholder="Enter Subject"/>
+                <div *ngIf="isSubmitted && f['subject'].errors" class="text-danger">
+                  <div *ngIf="f['subject'].errors['required']">Subject is required</div>
+                </div>
+              </c-col>
+            </c-row>
+          </div>
+          <div class="form-actions footer-action border-0 fluid">
+            <div class="col-lg-9 col-sm-12 col-xs-12 frm-button">
+              <button class="btn default" type="submit">Save</button>&nbsp;
+              <button class="btn btn-secondary" type="button" routerLink="/templates-management">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

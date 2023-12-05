@@ -1,0 +1,191 @@
+<div class="ds_pro_details">
+    <div class="ds_detail_tabing_box">
+        <div class="ds_donation">
+            <div class="ds_pro_detail_nav mb-0">
+                <ul>
+                    <li>
+                        <a href="javascript:void(0)" class="nav-text" [ngClass]="{ 'active': isMyDonation }" (click)="donationList('my-donation')" >My Donations</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" class="nav-text" [ngClass]="{ 'active': isMyProject }" (click)="donationList('my-project')" >My Projects</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="ds_donation_title">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="ds_donation_innerbox">
+                            <div class="ds_donation_inner_title sub_title">
+                                Project Name
+                            </div>
+                            <div class="ds_donation_inner_date sub_title">
+                                Date
+                            </div>
+                            <div class="ds_donation_inner_price sub_title">
+                                Amount
+                            </div>
+                            <div class="ds_donation_inner_tip sub_title">
+                                Tip
+                            </div>
+                            <div class="ds_donation_inner_text sub_title">
+                                Message
+                            </div>
+                            <div class="ds_donation_inner_donation sub_title">
+                                Donation Type
+                            </div>
+                            <div class="ds_donation_inner_re-date sub_title">
+                                Recurring Date
+                            </div>
+                            <div class="ds_donation_inner_action sub_title" *ngIf="isMyDonation">
+                                Action
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ds_donation_text">
+                <div class="row" *ngIf="isMyDonation  && finalResponse">
+                    <div class="col-12" *ngFor="let item of finalResponse|paginate: { itemsPerPage: per_page, currentPage: page, totalItems: total }; let i = index">
+                        <div class="ds_donation_innerbox">
+                            <div class="ds_donation_inner_title">
+                               {{item.project_title}}
+                            </div>
+                            <div class="ds_donation_inner_date">
+                                {{item.created_at | date: 'dd/MM/yyyy'}}
+                            </div>
+                            <div class="ds_donation_inner_price">
+                                ${{item.amount}}
+                            </div>
+                            <div class="ds_donation_inner_tip">
+                                ${{item.tips}}
+                            </div>
+                            <div class="ds_donation_inner_text">
+                                {{item.comment}}
+                            </div>
+                            <div class="ds_donation_inner_donation">
+                                {{item.donation_type_name}}
+                            </div>
+                            <div class="ds_donation_inner_re-date">
+                                {{item.month_end_date | date: 'dd/MM/yyyy'}}
+                            </div>
+                            <div class="ds_donation_inner_action">
+                                <button class="btn btn-red" (click)="stopRecurring(item.id);" *ngIf="item.is_recurring_stop=='0' && item.donation_type=='2'">Stop Recurring</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isMyProject && finalResponse">
+                    <div class="col-12" *ngFor="let item of finalResponse|paginate: { itemsPerPage: per_page, currentPage: page, totalItems: total }; let i = index">
+                        <div class="ds_donation_innerbox">
+                            <div class="ds_donation_inner_title">
+                                <strong>{{item.donor_name}}</strong><br />
+                                {{item.project_title}}                               
+                            </div>
+                            <div class="ds_donation_inner_date">
+                                {{item.created_at | date: 'dd/MM/yyyy'}}
+                            </div>
+                            <div class="ds_donation_inner_price">
+                                ${{item.amount}}
+                            </div>
+                            <div class="ds_donation_inner_tip">
+                                ${{item.tips}}
+                            </div>
+                            <div class="ds_donation_inner_text">
+                                {{item.comment}}
+                            </div>
+                            <div class="ds_donation_inner_tip">
+                                {{item.donation_type_name}}
+                            </div>
+                            <div class="ds_donation_inner_date">
+                                {{item.month_end_date | date: 'dd/MM/yyyy'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isMyDonation">
+                    <div class="col-12">
+                        <p class="text-center mb-3" *ngIf="finalResponse.length < 1">My Donation Not Found.</p>
+                    </div>                        
+                </div>
+                <div class="row" *ngIf="isMyProject">
+                    <div class="col-12">
+                        <p class="text-center mb-3" *ngIf="finalResponse.length < 1">My Projects Donation Not Found.</p>
+                    </div>                        
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- pagination -->
+    <div class="ds_pagination">
+        <nav aria-label="Page navigation example" class="pt-3" *ngIf="finalResponse.length > 0 && last_page != '1'">
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination" class="pagination pagination-list">
+                <li class="page-item custom-pagination">
+                    <ng-container *ngIf="pager.currentPage === 1">
+                        <a data-tooltip="tooltip" title="First" class="page-link custom-page-link"
+                            [ngClass]="{ disabled: pager.currentPage === 1 }" style="cursor: pointer">
+                            <i class="fa fa-angle-double-left"></i>
+                        </a>
+                    </ng-container>
+                    <ng-container *ngIf="pager.currentPage != 1">
+                        <a data-tooltip="tooltip" title="First" class="page-link custom-page-link"
+                            [ngClass]="{ disabled: pager.currentPage === 1 }" (click)="setCurrent(1)">
+                            <i class="fa fa-angle-double-left"></i>
+                        </a>
+                    </ng-container>
+                </li>
+                <li class="page-item custom-pagination">
+                    <ng-container *ngIf="pager.currentPage === 1">
+                        <a data-tooltip="tooltip" title="PREVIOUS" class="page-link custom-page-link"
+                            [ngClass]="{ disabled: pager.currentPage === 1 }" style="cursor: pointer">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                    </ng-container>
+                    <ng-container *ngIf="pager.currentPage != 1">
+                        <a data-tooltip="tooltip" title="PREVIOUS" class="page-link custom-page-link"
+                            [ngClass]="{ disabled: pager.currentPage === 1 }"
+                            (click)="setCurrent(pager.currentPage - 1)">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                    </ng-container>
+                </li>
+                <li *ngFor="let page of pager.pages" [class.active]="pager.currentPage === page"
+                    class="page-item custom-pagination">
+                    <a class="page-link custom-page-link" (click)="setCurrent(page)" style="cursor: pointer">{{
+                        page }}</a>
+                </li>
+                <li class="page-item custom-pagination">
+                    <ng-container *ngIf="pager.currentPage === pager.totalPages">
+                        <a data-tooltip="tooltip" title="NEXT" class="page-link custom-page-link" [ngClass]="{
+                disabled: pager.currentPage === pager.totalPages
+              }" style="cursor: pointer">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </ng-container>
+                    <ng-container *ngIf="pager.currentPage != pager.totalPages">
+                        <a data-tooltip="tooltip" title="NEXT" class="page-link custom-page-link" [ngClass]="{
+                disabled: pager.currentPage === pager.totalPages
+              }" (click)="setCurrent(pager.currentPage + 1)">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </ng-container>
+                </li>
+                <li class="page-item arrow-pagination">
+                    <ng-container *ngIf="pager.currentPage === pager.totalPages">
+                        <a data-tooltip="tooltip" title="LAST" class="page-link custom-page-link" [ngClass]="{
+                disabled: pager.currentPage === pager.totalPages
+              }" style="cursor: pointer">
+                            <i class="fa fa-angle-double-right"></i>
+                        </a>
+                    </ng-container>
+                    <ng-container *ngIf="pager.currentPage != pager.totalPages">
+                        <a data-tooltip="tooltip" title="LAST" class="page-link custom-page-link" [ngClass]="{
+                disabled: pager.currentPage === pager.totalPages
+              }" (click)="setCurrent(pager.totalPages)">
+                            <i class="fa fa-angle-double-right"></i>
+                        </a>
+                    </ng-container>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -1,0 +1,327 @@
+
+/* You can add global styles to this file, and also import other style files */
+// If you want to override variables do it here
+$enable-ltr: true;
+$enable-rtl: true;
+
+// Import styles with default layout.
+@import "~@coreui/coreui/scss/coreui";
+
+@import "~@coreui/chartjs/scss/coreui-chartjs";
+
+/* Importing Bootstrap SCSS file. */
+// @import '~bootstrap/scss/bootstrap';
+// perfect scrollbar theming for use with [perfectScrollbar] directive
+//@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+@import "layout";
+
+//Include multi select css file
+@import "../../node_modules/angular2-multiselect-dropdown/themes/default.theme.css";
+
+// Some temp fixes
+@import "fixes";
+
+// If you want to add something do it here
+@import "custom";
+@import "components";
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Regular.woff2") format("woff2"),
+      url("../fonts/Roboto-Regular.woff") format("woff"),
+      url("../fonts/Roboto-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Roboto-Bold";
+    src: url("../fonts/Roboto-Bold.woff2") format("woff2"),
+      url("../fonts/Roboto-Bold.woff") format("woff"),
+      url("../fonts/Roboto-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Roboto-Medium";
+    src: url("../fonts/Roboto-Medium.woff2") format("woff2"),
+      url("../fonts/Roboto-Medium.woff") format("woff"),
+      url("../fonts/Roboto-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  body {
+    font-family: "Roboto";
+  }
+  .Roboto-Bold {
+    font-family: "Roboto-Bold";
+  }
+  .Roboto-Medium {
+    font-family: "Roboto-Medium";
+  }
+  $base-color: #6eb173;
+  $theme-color : #417d46;
+  .text-theme-color{color: $base-color !important;}
+  .bg-theme-color{background-color: $base-color;}
+  .light-bgcolor{background-color: #e5e5e5;}
+.header-nav .show > .nav-link, .header-nav .nav-link.active {
+    color: black!important;
+}
+.font-18{
+    font-size: 18px;
+}
+.font-24{
+    font-size: 24px;
+}
+// .black-text{
+//     color: #000;
+// }
+.font-14{
+    font-size: 14px;
+}
+.width-150{width: 150px;}
+.text-959595{color: #959595 !important;}
+.link-color{color: #1c4bc1;}
+.bg-f1f1f1{background-color: #f1f1f1 !important;}
+.job-form-input .search-img {position: absolute;top: 3px;left: 13px;opacity: 0.4;}
+.job-form-select .select-group::before{opacity: 0.4;}
+
+.textarea {
+    height: 150px !important;
+}
+
+.sidebar-brand{
+    background-color: $theme-color;
+}
+
+.sidebar-design .sidebar-brand-full{
+    height: 50px;
+    object-fit: contain;
+} 
+.sidebar-design .ps{
+    background-color: #d4f3ff;
+    border-radius: 0px !important;
+}
+.sidebar-design .sidebar-nav .nav-link{
+    color: #FFFFFF;
+    padding: 12px 30px;
+    font-size: 15px;
+    background: #343434;
+}
+.sidebar-design .sidebar-nav .nav-link.active{
+    background-color: $theme-color;
+}
+.sidebar-design .sidebar-nav .nav-link.active:hover{
+    background-color: $theme-color !important;
+}
+.sidebar-design .sidebar-nav .nav-link:hover{
+    background : $base-color !important;
+}
+.sidebar-design  .sidebar-nav .nav-icon{
+    flex-basis: auto;
+    margin-left: 0px !important;
+}
+.sidebar-design img.profile-img {width: 100px;height: 100px;object-fit: cover;border-radius: 50% !important;}
+
+.sidebar-design .profile-part {text-align: center;padding: 20px 10px 10px;background: #343434;}
+
+.sidebar-design .profile-active::before{content: '';    position: absolute;
+    bottom: 6px;
+    right: -15px;
+    background-color: #0acf97;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+.breadcrumb-design .breadcrumb-item:first-child{display: none;}
+.breadcrumb-design .breadcrumb-item:last-child::before{display: none;}
+.breadcrumb-design .breadcrumb-item{color: $base-color;font-family: "Roboto-Bold";font-size: 18px;padding: 10px 20px;}
+.portlet.box.content-box {background-color: #f8fdff;border-radius: 20px !important;}
+.portlet.box.content-box .portlet-body{padding: 30px !important;}
+.table-customize th {border: none;border-bottom:1px solid #959595;font-size: 16px !important;}
+.table-customize td{border: none !important;}
+.table-customize tr:nth-child(even){
+    background-color: #E3FAE3;
+}
+.table-customize .th-no{width: 50px;}
+.table-customize{border: none !important;background-color: transparent !important;font-size: 16px;}
+.form-select-design{padding: 10px 20px 10px 20px !important;}
+.form-control{padding: 10px 20px 10px 20px;height: auto;}
+.search-icon {
+    position: absolute;
+    color: #959595;
+    top: 50%;
+    left: 20px;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+}
+body .float-none{float: none;width: auto !important;}
+.search-icon > i{font-size: 21px !important;}
+.select-group::before {
+    content: '';
+    position: absolute;
+    background-image: url(../assets/images/accordion-arrow.png);
+    top: 50%;
+    right: 9px;
+    width: 14px;
+    height: 7px;
+    background-size: contain;
+    transform: translateY(-50%);
+    background-repeat: no-repeat;
+    opacity: 0.4;
+}
+.page-item.active .page-link{background-color: $theme-color;border-color: $theme-color;}
+.page-item .page-link{color: $theme-color;}
+.pagination-list .page-item{margin: 0 4px;} 
+.number-text{font-size: 64px;}
+.dashboard-card{background-color: #8ccfe9;border-radius: 20px !important;}
+.dashboard-page .breadcrumb-design{display: none;}
+.avatar.user-text{white-space: nowrap;display: block;width: auto;height: auto;padding: 7px 25px 7px 5px;}
+.user-btn::before{font-family: "Font Awesome 6 Free";font-weight: 900;position: absolute;right: 0;transform: translate(-50%, -50%);top: 50%;font-size: 15px;color: $base-color;}
+.user-btn{border: none;outline: none;}
+
+.btn.default{background-color: $theme-color !important;}
+.btn.default:hover{background-color: $base-color !important;}
+
+.form-actions.footer-action{background-color:#f8fdff;}
+.header-nav .nav-link.dropdown-item{cursor: pointer;}
+.checkbox-table p > b {
+    width: 140px;
+    display: inline-block;
+}
+.invalid-feedback {
+    text-align: left;
+}
+input.form-control.is-invalid{
+    border-color: #e55353 !important;
+}
+.avatar-img {
+    border-radius: 50%!important;
+}
+span.ng-star-inserted {
+    font-size: 1rem;
+    color: #212529!important;
+}
+
+@media(max-width: 1440px){
+    .font-18{font-size: 16px;}
+    .number-text{font-size: 50px;}
+    .font-24{font-size: 20px;}
+    .table-customize th,
+    .table-customize td {font-size: 15px !important;}
+    .search-icon > i {
+        font-size: 20px !important;
+    }
+}
+@media(max-width: 1200px){
+    .font-18{font-size: 14px;}
+    .table-customize th,
+    .table-customize td {font-size: 14px !important;}
+    .search-icon > i {
+        font-size: 18px !important;
+    }
+    .min-width-150{min-width: 150px;}
+}
+@media(max-width: 575px){
+    .portlet.box.content-box .portlet-body {
+        padding: 15px !important;
+    }
+    .table-customize th,
+    .table-customize td {font-size: 13px !important;}
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.cuppa-dropdown .dropdown-list {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 100% !important;
+    bottom: auto !important;
+}
+.cuppa-dropdown .dropdown-list .arrow-down {
+    opacity: 1;
+    transform: none;
+    top: 1px;
+    bottom: auto;
+}
+.cuppa-dropdown .dropdown-list .arrow-down.arrow-2 {
+    top: -1px;
+    bottom: auto;
+}
+body .selected-list .c-angle-down, body .selected-list .c-angle-up {
+    top: 7px;
+    transform: none;
+    bottom: auto;
+}
+
+.sidebar-nav .nav-group.show {
+    background: none;
+}
+
+.sidebar-nav .nav-group.show .nav-group-toggle {
+    color: black;
+}
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,102,203, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+  
+.custom-toggler.navbar-toggler {
+    border-color: rgb(255,102,203);
+} 
+
+.sidebar-nav .nav-group-toggle::after {
+    display: block;
+    flex: 0 12px;
+    height: 26px;
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    content: "\f106";
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform .15s;
+.description-text {
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+}
+.evidence-file {
+    cursor: pointer;
+    color: #1c4bc1;
+}
+.disable {
+    pointer-events:none;
+    cursor: not-allowed;
+}
+.page-link:hover {
+    background-color: $base-color !important;
+    color : #FFFFFF !important;
+}
+.page-item.active .page-link:hover{
+    background-color: $theme-color !important;
+}
+.info-item {
+    margin-bottom: 20px;
+}
+.info-item span {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #343434;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.info-item strong {
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 30px;
+    color: #343434;
+}

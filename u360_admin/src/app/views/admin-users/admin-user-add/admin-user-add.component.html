@@ -1,0 +1,74 @@
+<div class="page-content" style="min-height:659px">
+    <div class="portlet box blue-steel float-none content-box my-md-4  mx-md-3 border-0">
+        <div class="portlet-body form bg-transparent p-3 border-0">
+            <div class="actions text-end">
+                <a routerLink="/admin-management/admin-users" class="btn default "><i class="fa-solid fa-chevron-left"></i> Back</a>
+            </div>
+            <form [formGroup]="userEdit" (ngSubmit)="onSubmit()">
+                <div class="p-3">
+                    <c-row class="mb-3">
+                        <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                            User Group<span class="required">*</span>
+                        </label>
+                        <c-col [lg]="4">
+                            <select formControlName="user_group_id"
+                                [ngClass]="{ 'is-invalid': isSubmitted && f['user_group_id'].errors }"
+                                class="form-control form-select-design" cSelect>
+                                <option selected="selected" value=""> -- Select -- </option>
+                                <option *ngFor="let group of groupList" [value]="group.id">{{ group.group_name }}</option>
+                            </select>
+                            <div *ngIf="isSubmitted && f['user_group_id'].invalid" class="text-danger">
+                                <div *ngIf="f['user_group_id'].errors && f['user_group_id']errors['required']">
+                                    Select user group</div>
+                            </div>
+                        </c-col>
+                    </c-row>
+                    <c-row class="mb-3">
+                        <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                            Name<span class="required">*</span>
+                        </label>
+                        <c-col [lg]="4">
+                            <input cFormControl type="text" formControlName="name"
+                                [ngClass]="{ 'is-invalid': isSubmitted && f['name'].errors }" />
+                            <div *ngIf="isSubmitted && f['name'].errors" class="text-danger">
+                                <div *ngIf="f['name'].errors['required']">Name is required</div>
+                            </div>
+                        </c-col>
+                    </c-row>
+                    <c-row class="mb-3">
+                        <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                            Email<span class="required">*</span>
+                        </label>
+                        <c-col [lg]="4">
+                            <input cFormControl type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$]*"
+                                formControlName="email"
+                                [ngClass]="{ 'is-invalid': isSubmitted && f['email'].errors }" />
+                            <div *ngIf="isSubmitted && f['email'].errors" class="text-danger">
+                                <div *ngIf="f['email'].errors['required']">Email is required</div>
+                                <div *ngIf="f['email'].errors && f['email'].errors['email']">Email is invalid</div>
+                            </div>
+                        </c-col>
+                    </c-row>
+                    <c-row class="mb-3">
+                        <label cLabel="col" cCol [lg]="3" class="control-label pt-0 text-lg-end text-start">
+                            Activate
+                        </label>
+                        <c-col [lg]="4">
+                            <input cFormCheckInput formControlName="status" type="checkbox" />
+                        </c-col>
+                    </c-row>
+                </div>
+                <div class="form-actions footer-action border-0 fluid">
+                    <div class="col-lg-9 col-sm-12 col-xs-12 frm-button">
+                        <button class="btn default" type="submit">Create</button>&nbsp;
+                        <button class="btn btn-secondary" type="button" routerLink="/admin-management/admin-users">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,436 @@
+<div class="main-dashboard">
+    <div class="ds_pro_details">
+        <!-- top-dashboard-section  -->
+        <div class="top-dashboard-section">
+            <div class="row">
+                <div class="col-md-3 col-12">
+                    <div class="top-dashboard-inner_box background-green">
+                        <div class="number-box">
+                            <div class="icon">
+                                <span class="material-symbols-rounded">group</span>
+                            </div>
+                            <div class="text">
+                                <strong>{{ cardDetails.total_users }}</strong>
+                                <span>Total No. Of Users</span>
+                            </div>
+
+                        </div>
+                        <div *ngIf="this.userCardData" class="top-dashboard-chart">
+                            <c-chart [data]="userCardData[0]" [options]="lineOptions" type="line"
+                                class="mx-auto"></c-chart>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="top-dashboard-inner_box background-blue">
+                        <div class="number-box">
+                            <div class="icon">
+                                <span class="material-symbols-rounded">volunteer_activism</span>
+                            </div>
+                            <div class="text">
+                                <strong>{{ cardDetails.total_volunteer }}</strong>
+                                <span>No. of Volunteers</span>
+                            </div>
+                        </div>
+                        <div *ngIf="this.volunteerCardData" class="top-dashboard-chart">
+                            <c-chart [data]="volunteerCardData[0]" [options]="lineOptions" type="line"
+                                class="mx-auto"></c-chart>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="top-dashboard-inner_box background-skyblue">
+                        <div class="number-box">
+                            <div class="icon">
+                                <span class="material-symbols-rounded">payments</span>
+                            </div>
+                            <div class="text">
+                                <strong>${{ cardDetails.total_donation }}</strong>
+                                <span>Total Donations</span>
+                            </div>
+                        </div>
+                        <div *ngIf="this.donationCardData" class="top-dashboard-chart">
+                            <c-chart [data]="donationCardData[0]" [options]="lineOptions" type="line"
+                                class="mx-auto"></c-chart>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="top-dashboard-inner_box background-pink">
+                        <div class="number-box">
+                            <div class="icon">
+                                <span class="material-symbols-rounded">home_storage</span>
+                            </div>
+                            <div class="text">
+                                <strong>{{ cardDetails.total_project }}</strong>
+                                <span>No. of Projects</span>
+                            </div>
+                        </div>
+                        <div *ngIf="this.projectCardData" class="top-dashboard-chart">
+                            <c-chart [data]="projectCardData[0]" [options]="lineOptions" type="line"
+                                class="mx-auto"></c-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- user-info-chart -->
+        <div class="user-info-chart">
+            <div class="row">
+                <div class="col-lg-12 col-12">
+                    <div class="user-info-left">
+                        <div class="user-info-left-top">
+                            <div class="number-of-user">
+                                <strong>No. of Users</strong>
+                                <h4>{{ userChartDetails.totalUser }}
+                                    <span class="material-symbols-sharp">trending_up</span>
+                                </h4>
+                            </div>
+                            <div class="user-info-chart-select">
+                                <div class="input-group">
+                                    <select class="form-control" aria-label="Default select example"
+                                        [(ngModel)]="userChartMonthSelect" (change)="getDashboardUserChartDetails()">
+                                        <option value="week">Weekly</option>
+                                        <option value="month">Monthly</option>
+                                        <option value="year">Yearly</option>
+                                    </select>
+                                    <select class="form-control" aria-label="Default select example"
+                                        [(ngModel)]="userChartTypeSelect" (change)="getDashboardUserChartDetails()">
+                                        <option value="">All</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">InActive</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="userLineChart">
+                            <c-chart [data]="userLineChart" [options]="userLineChartOptions" type="line"
+                                height="300"></c-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Donations Map -->
+        <div class="donations-map">
+            <div class="donations-map-chart">
+                <div class="row">
+                    <div class="col-xl-9 col-12">
+                        <div class="map" *ngIf="isMapChartShow else showEmptyMap">
+                            <highcharts-chart id="container" class="container" [Highcharts]="Highcharts"
+                                [constructorType]="chartConstructor" [options]="chartOptions"
+                                style="width: 100%; height: 500px; display: block;">
+                            </highcharts-chart>
+                        </div>
+                        <ng-template #showEmptyMap>
+                            <highcharts-chart id="container" class="container" [Highcharts]="Highcharts"
+                                [constructorType]="chartConstructor"
+                                style="width: 100%; height: 500px; display: block;">
+                            </highcharts-chart>
+                        </ng-template>
+                        <div class="donations-map-btn">
+                            <button class="btn btn-green" *ngIf="mapChartSearchType == 'donation'"
+                                (click)="mapDonationButtonClick('donation')">Donations</button>
+                            <button class="btn btn-grey" *ngIf="mapChartSearchType == 'project'"
+                                (click)="mapDonationButtonClick('donation')">Donations</button>
+                            <button class="btn btn-grey" *ngIf="mapChartSearchType == 'donation'"
+                                (click)="mapDonationButtonClick('project')">Projects</button>
+                            <button class="btn btn-green" *ngIf="mapChartSearchType == 'project'"
+                                (click)="mapDonationButtonClick('project')">Projects</button>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-12">
+                        <div class="donations-map-chart-text">
+                            <div class="form-check form-switch">
+                                <strong *ngIf="this.mapChartSearchType=='donation'">in $</strong>
+                                <strong *ngIf="this.mapChartSearchType=='project'">in </strong>
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                    (change)="checkBoxChanged($event)">
+                                <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                <strong>in %</strong>
+                            </div>
+                            <div class="country-region">
+                                <div class="top-title">
+                                    <p>Country/Region</p>
+                                    <p *ngIf="this.mapChartSearchType=='donation'">Donations</p>
+                                    <p *ngIf="this.mapChartSearchType=='project'">Projects</p>
+                                </div>
+                                <ul *ngIf="mapContryDetails && mapContryDetails.length > 0">
+                                    <li *ngFor="let contryList of mapContryDetails">
+                                        <p>{{ contryList[0] }}</p>
+                                        <strong
+                                            *ngIf="this.mapChartValueType=='normal' && this.mapChartSearchType=='donation'">${{
+                                            contryList[1] }}</strong>
+                                        <strong
+                                            *ngIf="this.mapChartValueType=='normal' && this.mapChartSearchType=='project'">{{
+                                            contryList[1] }}</strong>
+                                        <strong *ngIf="this.mapChartValueType=='percentage'">{{ contryList[1]
+                                            }}%</strong>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- inventory -->
+        <div class="inventory-section">
+            <div class="row">
+                <div class="col-xxl-3 col-md-6 col-12 order-xxl-1 order-md-2">
+                    <div class="no-sponsors">
+                        <div class="no-sponsors-chart">
+                            <c-chart [data]="sponsorChartData" type="doughnut">
+                            </c-chart>
+                            <strong class="total_donation_text">{{ this.sponsorChartDetails.totalSponser }} <br>
+                                <span>TOTAL</span></strong>
+                        </div>
+                        <ul>
+                            <li>
+                                <strong>Individual User</strong>
+                                <span> {{ this.sponsorChartDetails.individualSponserCount }}</span>
+                            </li>
+                            <li>
+                                <strong>Corporate User</strong>
+                                <span>{{ this.sponsorChartDetails.corpoSponserCount }}</span>
+                            </li>
+                            <li>
+                                <strong>Total User</strong>
+                                <span>{{ this.sponsorChartDetails.totalSponser }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xxl-6 col-md-12 col-12 order-xxl-2 order-md-1 mb-xxl-0 mb-md-5">
+                    <div class="total_donation">
+                        <div class="total_donation_top">
+                            <div class="number-of-user">
+                                <strong>Total Donations</strong>
+                                <h4>${{ sponsorChartDetails.totalDonation }} <span
+                                        class="material-symbols-sharp">trending_up</span></h4>
+                            </div>
+                            <div class="total_donation_select">
+                                <select class="form-control" aria-label="Default select example"
+                                    [(ngModel)]="donationChartMonthSelect" (change)="getDashboardSponserChartDetails()">
+                                    <option value="month">Monthly</option>
+                                    <option value="year">Yearly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="donationChartdata">
+                            <c-chart [data]="donationChartdata" type="bar"></c-chart>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6 col-12 order-xxl-3 order-md-3">
+                    <div class="average-donation-main">
+                        <div class="average-donation">
+                            <strong class="title">Average Donation</strong>
+                            <div class="average-donation-item-box">
+                                <div class="average-donation-item">
+                                    <span class="color-red"></span>
+                                    <p>Corporate : <span>{{ sponsorChartDetails.totalDonationByCorpo }}</span></p>
+                                </div>
+                                <div class="average-donation-item">
+                                    <span class="color-blue"></span>
+                                    <p>Individual : <span>{{ sponsorChartDetails.totalDonationByIndividual }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- User Profiles -->
+        <div class="user-profile-slider">
+            <h6 class="ProfileSlider-title">User Profiles</h6>
+            <owl-carousel-o [options]="ProfileSlider">
+
+                <ng-template carouselSlide *ngFor="let recent_users of dashboardFooterDetails.recent_users">
+                    <div class="slide-item">
+                        <div class="pro_slide-top">
+                            <div class="img">
+                                <img [src]="recent_users.image" alt="" *ngIf="recent_users.image!=''">
+                                <img src="../assets/images/profile-img.png" alt="" *ngIf="recent_users.image==''">
+                            </div>
+                            <strong>{{ recent_users.name }}</strong>
+                            <span>{{ recent_users.location }}</span>
+                        </div>
+                        <div class="pro_slide-bottomp">
+                            <p *ngIf="recent_users.user_type && recent_users.user_type == 1"><span
+                                    class="material-symbols-outlined"> person </span> Individual</p>
+                            <p *ngIf="recent_users.user_type && recent_users.user_type == 2"><span
+                                    class="material-symbols-outlined"> work</span> Corporate</p>
+                            <p> <span class="material-symbols-outlined"> call </span> {{ recent_users.mobile }}</p>
+                            <p> <span class="material-symbols-outlined"> mail </span> {{ recent_users.email }}</p>
+                        </div>
+                    </div>
+                </ng-template>
+
+            </owl-carousel-o>
+        </div>
+        <!-- Recent Reviews and Ratings -->
+        <div class="recent-reviews-rating">
+            <h6 class="review-rating-title">Recent Reviews and Ratings</h6>
+            <owl-carousel-o [options]="RecentRating" *ngIf="dashboardFooterDetails.my_project_ratings && dashboardFooterDetails.my_project_ratings.length> 0">
+                <ng-template carouselSlide *ngFor="let my_project_ratings of dashboardFooterDetails.my_project_ratings">
+                    <div class="review-rating-slider">
+                        <h6>{{ my_project_ratings.project_title }}</h6>
+                        <p>{{ my_project_ratings.comment }}</p>
+                        <div class="review-rating-footer">
+                            <div class="img-icon">
+                                <img [src]="my_project_ratings.profile_image" alt=""
+                                    *ngIf="my_project_ratings.profile_image!=''">
+                                <img src="../assets/images/profile-img.png" alt=""
+                                    *ngIf="my_project_ratings.profile_image==''">
+                            </div>
+                            <div class="start-icon">
+                                <strong>{{ my_project_ratings.user_name }}</strong>
+                                <ul>
+                                    <li *ngFor="let number of [0,1,2,3,4]">
+                                        <span class="material-symbols-sharp"
+                                            *ngIf="number < my_project_ratings.rating">star</span>
+                                        <span class="material-symbols-outlined"
+                                            *ngIf="number >= my_project_ratings.rating">star</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+            <div class="favourite-project-item"  *ngIf="dashboardFooterDetails.my_project_ratings && dashboardFooterDetails.my_project_ratings.length < 1">
+                <!-- Content to display when the condition is false -->
+                <p class="text-center p-2">Recent Reviews and Ratings Not Found.</p>
+            </div>
+        </div>
+        <!-- footer-dasboard-box -->
+        <div class="footer-dasboard-box">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 left">
+                    <div class="favourite-projects-list">
+                        <h6 class="title">Favourite Projects List</h6>
+                        <div class="favourite-project-item" 
+                            *ngFor="let favourite_projects of dashboardFooterDetails.favourite_projects">
+                            <div class="img">
+                                <img [src]="favourite_projects.default_image" alt=""
+                                    *ngIf="favourite_projects.default_image!=''">
+                                <img src="../assets/images/profile-img.png" alt=""
+                                    *ngIf="favourite_projects.default_image=='' || favourite_projects.default_image==null">
+                            </div>
+                            <div class="text">
+                                <strong>{{ favourite_projects.title }}</strong>
+                                <p>Raised ${{ favourite_projects.totalAmount }} of ${{ favourite_projects.amount }} </p>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" [style.width] ="getConcatPercentageValue(favourite_projects.totalDonationPercentage)"
+                                        aria-valuenow="{}"
+                                        aria-valuemin="{{ favourite_projects.totalDonationPercentage }}"
+                                        aria-valuemax="100">{{ favourite_projects.totalDonationPercentage }}%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="favourite-project-item"  *ngIf="dashboardFooterDetails.favourite_projects && dashboardFooterDetails.favourite_projects.length < 1">
+                            <!-- Content to display when the condition is false -->
+                            <p class="text-center p-2">Favourite Projects Not Found.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-6 right">
+                    <!-- Recent Donation -->
+                    <div class="recent_donation">
+                        <h6 class="recent_donation_title">
+                            Recent Donation
+                        </h6>
+                        <div class="row" *ngIf="dashboardFooterDetails.my_project_donations && dashboardFooterDetails.my_project_donations.length > 0 else donationNotFound">
+                            <div class="col-lg-4 col-md-6 col-12"
+                                *ngFor="let project_donations of dashboardFooterDetails.my_project_donations">
+                                <div class="recent_donation_ds_item">
+                                    <div class="img">
+                                        <img [src]="project_donations.profile_image" alt=""
+                                            *ngIf="project_donations.profile_image!=''">
+                                        <img src="../assets/images/profile-img.png" alt=""
+                                            *ngIf="project_donations.profile_image=='' || project_donations.profile_image==null">
+                                    </div>
+                                    <div class="text">
+                                        <h5>{{ project_donations.user_name }}</h5>
+                                        <strong>${{ project_donations.donation_amount }}</strong>
+                                        <p>{{ project_donations.project_title }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #donationNotFound>
+                            <!-- Content to display when the condition is false -->
+                            <p class="mb-2">Recent Donation Not Found.</p>
+                        </ng-template>
+                    </div>
+                    <!-- Quick Actions -->
+                    <div class="quick-action">
+                        <h6 class="quick-action-title">Quick Actions</h6>
+                        <div class="quick-action-box">
+                            <div class="row">
+                                <div class="col-md-4 col-12">
+                                    <div class="quick-action-item">
+                                        <div class="icon">
+                                            <span class="material-symbols-sharp">border_color </span>
+                                        </div>
+                                        <div class="text">
+                                            <a href="/user/projects/add">Start A Project</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-4 col-12">
+                                    <div class="quick-action-item">
+                                        <div class="icon">
+                                            <span class="material-symbols-sharp">person </span>
+                                        </div>
+                                        <div class="text">
+                                            <a href="#">Become Volunteer</a>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-md-4 col-12">
+                                    <div class="quick-action-item">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                                receipt_long
+                                            </span>
+                                        </div>
+                                        <div class="text">
+                                            <a href="#">Archived Projects</a>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-md-4 col-12">
+                                    <div class="quick-action-item">
+                                        <div class="icon">
+                                            <img src="../assets/images/Donations.svg" alt="">
+                                        </div>
+                                        <div class="text">
+                                            <a href="/donate">Donate</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <div class="quick-action-item">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                                settings
+                                            </span>
+                                        </div>
+                                        <div class="text">
+                                            <a href="/user/projects/list">Manage Projects</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

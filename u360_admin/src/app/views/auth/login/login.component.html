@@ -1,0 +1,47 @@
+<div class="page-wrap login-page text-center">
+	<div class="login-details">
+		<div class="image-logo mb-4">
+			<!-- <img src="assets/images/tilers.png" alt="Ubuntu360" class="logo-login-page"> -->
+			<h1><b class="login-heading">Ubuntu360</b></h1>
+		</div>
+		<h3 class="login-main-heading">Admin Login</h3>
+		<form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()" class="login-form">
+			<div class="row">
+				<div class="col-12">
+					<div class="mb-3">
+						<input cFormControl type="email" formControlName="email" class="form-control" placeholder="Email"
+							[ngClass]="{ 'is-invalid': submitted && f['email'].errors }" placeholder="email" />
+						<div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+							<div *ngIf="f['email'].errors['required']">Email address is required
+							</div>
+							<div
+								*ngIf="f['email'].errors && f['email'].errors['email']">
+								Email is invalid</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="mb-3">
+						<div class="input-group password-input">
+							<input cFormControl [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control" placeholder="Password"
+							[ngClass]="{ 'is-invalid': submitted && f['password'].errors }" placeholder="password"/>
+							<span toggle="#password" class="input-group-text password-eye" [ngClass]="{ 'show': showPassword }"
+								(click)="toggleShowPassword()"><img src="./assets/images/eye-icon.png" alt=""></span>
+							<div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+								<div *ngIf="f['password'].errors['required']">Password is required</div>
+								<div *ngIf="f['password'].errors && f['password'].errors['minlength']">
+									Minimum six character password is required</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12">
+					<button type="submit" class="btn submit-btn d-block w-100">Login</button>
+				</div>
+				<p class="text-center login-now-text">Forgot Password? 
+					<a [routerLink]="['/forget-password']" class="text-color" >Reset Password</a>
+				</p>
+			</div>
+		</form>
+	</div>
+</div>

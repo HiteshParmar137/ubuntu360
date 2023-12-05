@@ -1,0 +1,22 @@
+[
+    {
+        "module_name": "User Groups",
+        "action": [
+            "list",
+            "add",
+            "edit",
+            "delete"
+        ],
+        "slug": "user-group"
+    },
+    {
+        "module_name": "Users",
+        "action": [
+            "list",
+            "add",
+            "edit",
+            "delete"
+        ],
+        "slug": "users"
+    }
+]

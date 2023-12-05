@@ -1,0 +1,38 @@
+<c-sidebar #sidebar="cSidebar" class="d-print-none sidebar sidebar-fixed sidebar-design" id="sidebar" visible>
+  <c-sidebar-brand><b class="project-name">
+    <img src="./assets/images/logo.svg" alt="" class="site-logo">
+  </b></c-sidebar-brand>
+
+  <!-- <perfect-scrollbar [config]="perfectScrollbarConfig"> -->
+    <div class="profile-part">
+      <div class="profile-image-part mb-3">
+        <img src={{userProfile}} alt="" class="profile-img" *ngIf="userProfile && userProfile != ''">
+        <img src="./assets/images/profile-img.png" alt="" class="profile-img" *ngIf="userProfile == ''">
+      </div>
+      <h3 class="profile-name font-18 black-text mb-0">{{userName}}</h3>
+      <p class="profile-active position-relative d-inline-block black-text font-14 mb-0">Online</p>
+    </div>
+    <c-sidebar-nav [navItems]="navItems" role="navigation"></c-sidebar-nav>
+  <!-- </perfect-scrollbar> -->
+  
+  </c-sidebar>
+<!--main-->
+<div class="wrapper d-flex flex-column">
+  <!--app-header-->
+  <app-default-header class="d-print-none header header-sticky" position="sticky" sidebarId="sidebar">
+  </app-default-header>
+  <!--app-body-->
+  <div class="body flex-grow-1 ">
+    <ng-container>
+      <c-container [fluid]="true" class="light-bgcolor">
+        <c-breadcrumb-router class="ms-0 breadcrumb-design"></c-breadcrumb-router>
+      </c-container>
+    </ng-container>
+    <c-header-divider></c-header-divider>
+    <c-container breakpoint="lg" class="h-auto ">
+      <router-outlet></router-outlet>
+    </c-container>
+  </div>
+  <!--app footer-->
+  <app-default-footer></app-default-footer>
+</div>

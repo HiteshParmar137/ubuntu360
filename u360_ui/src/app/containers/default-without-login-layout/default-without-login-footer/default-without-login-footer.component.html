@@ -1,0 +1,146 @@
+<!-- Footer  -->
+<footer class="footer">
+
+  <div class="footer-main">
+      <div class="container">
+          <div class="row">
+
+              <div class="col-xl-4 col-md-6 col-12 col_first">
+                  <div class="footer_inner_box">
+                      <div class="footer-logo">
+                          <a href="#">
+                              <img src="./assets/images/footer-logo.png" alt="">
+                          </a>
+                      </div>
+                      <div class="footer-description">
+                          <p>we believe in creating real and lasting change by empowering communities to come together and support sustainable impact projects.</p>
+                      </div>
+                      <div class="footer-social-icon">
+                          <ul>
+                              <li *ngIf="twitter!=''">
+                                  <a href="{{ twitter }}"><i class="fab fa-twitter"></i></a>
+                              </li>
+                              <li *ngIf="instagram!=''">
+                                  <a href="{{ instagram }}"><i class="fab fa-instagram"></i></a>
+                              </li>
+                              <li *ngIf="facebook!=''">
+                                  <a href="{{ facebook }}"><i class="fab fa-facebook-f"></i></a>
+                              </li>
+                              <li *ngIf="youtube!=''">
+                                  <a href="{{ youtube }}"><i class="fab fa-youtube"></i></a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-xl-2 col-md-6 col-12 col_second">
+                  <div class="footer_inner_box">
+                      <h5 class="footer_sub_title">Quick links</h5>
+                      <div class="footer-menu">
+                          <ul>
+                              <li routerLinkActive="active">
+                                  <a [routerLink]="['/about-us']">About us</a>
+                              </li>
+                              <!-- <li routerLinkActive="active">
+                                  <a [routerLink]="['/explore']">Explore</a>
+                              </li> -->
+                              <li routerLinkActive="active">
+                                <a [routerLink]="['/community']">Community</a>
+                              </li>
+                              <li routerLinkActive="active">
+                                  <a [routerLink]="['/projects']">My Projects</a>
+                              </li>
+                              <li routerLinkActive="active">
+                                  <a [routerLink]="['/login']">Login</a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-xl-2 col-md-6 col-12 col_third">
+                  <div class="footer_inner_box">
+                      <h5 class="footer_sub_title">Quick links</h5>
+                      <div class="footer-address">
+                          <ul>
+                              <li *ngIf="phone_no!=''">
+                                  <div class="inner-box">
+                                      <span class="icon"> <i class="fas fa-phone-alt"></i></span>
+                                      <p>
+                                          <strong>Call us</strong>
+                                          <span> <a href="tel:{{ phone_no }}">{{ phone_no }}</a></span>
+                                      </p>
+                                  </div>
+                              </li>
+                              <li *ngIf="email!=''">
+                                  <div class="inner-box">
+                                      <span class="icon"><i class="fas fa-envelope"></i></span>
+                                      <p>
+                                          <strong>Mail Us</strong>
+                                          <span><a href="mailto:{{ email }}">{{ email }} </a></span>
+                                      </p>
+                                  </div>
+                              </li>
+                              <li *ngIf="visit_us!=''">
+                                  <div class="inner-box">
+                                      <span class="icon"><i class="fas fa-map-marker-alt"></i></span>
+                                      <p>
+                                          <strong>Visit Us</strong>
+                                          <span *ngIf="visit_us !=''"><a href="{{ visit_us }}">{{ visit_us }}</a> </span>
+                                      </p>
+                                  </div>
+                              </li>
+                              <li *ngIf="whatsapp_no!=''">
+                                  <div class="inner-box">
+                                      <span class="icon"><i class="fab fa-whatsapp"></i></span>
+                                      <p>
+                                          <strong>WhatsApp</strong>
+                                          <span>{{ whatsapp_no }}</span>
+                                      </p>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-xl-4 col-md-6 col-12 col_four">
+                  <div class="footer_inner_box">
+                      <h5 class="footer_sub_title">Subscribe to Our Newsletter</h5>
+                      <p class="subscribe-text">Subscribe and stay up to date with our news and upcoming events.
+                      </p>
+                      <div class="subscribe-form">
+                          <form action="" [formGroup]="subscriptionForm">
+                              <input type="text" placeholder="Enter Email" formControlName="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$]*"
+                              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" id="email" name="email">
+                              <button type="submit" class="btn btn-red" (click)="subscribe()">Send</button>
+                          </form>
+                          <div *ngIf="submitted && f['email'].errors" class="text-danger">
+                            <div *ngIf="f['email'].errors['required']">Email is required</div>
+                            <div *ngIf="f['email'].errors['email']">Email is invalid</div>
+                            <div *ngIf="!f['email'].errors['email'] &&  f['email'].errors['pattern']">Email is invalid</div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="footer-bottom">
+      <div class="container">
+          <div class="footer_bottom_menu">
+              <ul>
+                  <li>
+                      <a [routerLink]="['/privacy-policy']">Privacy Policy</a>
+                  </li>
+                  <li>
+                      <a [routerLink]="['/terms-condition']">Terms Of Use</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+</footer>
+<!-- End Footer  -->

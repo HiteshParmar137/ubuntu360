@@ -1,0 +1,70 @@
+<div class="page-content" style="min-height:659px">
+    <div class="portlet box blue-steel float-none content-box my-md-4  mx-md-3 border-0">
+        <form [formGroup]="groupAddForm" (ngSubmit)="onSubmit()">
+            <div class="portlet-body form bg-transparent p-3 border-0">
+                <div class="actions text-end">
+                    <a routerLink="/admin-management/user-groups" class="btn btn-secondary"><i class="fa-solid fa-chevron-left"></i> Back</a>
+                </div>
+                <div class="p-3">
+                     <c-row class="mb-3">
+                         <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                             Group Name<span class="required">*</span>
+                         </label>
+                         <c-col [lg]="4">
+                             <input cFormControl type="text" formControlName="group_name"
+                             [ngClass]="{
+                                'is-invalid': submitted && f['group_name'].errors
+                              }"/>
+                              <div *ngIf="submitted && f['group_name'].errors" class="text-danger">
+                                <div *ngIf="f['group_name'].errors?.['required']">
+                                    Group name is required
+                                </div>
+                            </div>
+                         </c-col>
+                     </c-row>
+                     <c-row class="mb-3">
+                        <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                           Description
+                        </label>
+                        <c-col [lg]="4">
+                            <textarea class="form-control textarea"
+                                    formControlName="description" rows="3"></textarea>
+                        </c-col>
+                    </c-row>
+                     <c-row class="mb-3">
+                         <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start pt-0">
+                             Status
+                         </label>
+                         <c-col [lg]="4">
+                             <input cFormCheckInput formControlName="status" type="checkbox" />
+                         </c-col>
+                     </c-row>
+                     <c-row class="mb-3">
+                         <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start pt-0">
+                             Permission
+                         </label>
+                         <c-col [lg]="6">
+                             <table width="100%" class="checkbox-table" >
+                                <tbody *ngIf="finalResponse.length > 0">
+                                    <tr *ngFor="let finalRes of finalResponse;let indexOfelement=index;">
+                                        <p><b class="col-md-3">{{finalRes.module_name}}:</b>&nbsp;
+                                            <ng-container *ngFor="let r of finalRes.action">
+                                                <input class="checkbox-group oneChecked_{{r}}_{{indexOfelement}}" type="checkbox" (change)="listSelect(indexOfelement,r)" value="{{r}}" name="{{finalRes.slug}}"/>&nbsp;{{r | titlecase }}&nbsp;
+                                            </ng-container>
+                                        </p>
+                                    </tr>
+                                </tbody>
+                             </table>
+                         </c-col>
+                     </c-row>
+                 </div>
+                 <div class="form-actions footer-action border-0 fluid">
+                    <div class="col-lg-9 col-sm-12 col-xs-12 frm-button">
+                         <button class="btn default" type="submit">Save</button>&nbsp;
+                         <button class="btn btn-secondary" type="button" routerLink="/admin-management/user-groups">Cancel</button>
+                     </div>
+                 </div>
+             </div>
+        </form>
+    </div>
+</div>

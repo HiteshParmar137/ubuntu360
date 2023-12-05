@@ -1,0 +1,186 @@
+<div class="page-content" style="min-height: 659px">
+    <div class="portlet box blue-steel float-none content-box my-md-4 mx-md-3 border-0">
+        <!-- <a [routerLink]="['/user-management/users/details/' + userDetails.id]" class="btn btn-success active">User Details</a>&nbsp;
+        <a [routerLink]="['/user-management/corporate-users/project/list/' + userDetails.id]" class="btn btn-outline-success">Projects</a>&nbsp;
+        <a [routerLink]="['/user-management/corporate-users/project/follow/' + userDetails.id]" class="btn btn-outline-success">Followed Projects</a> -->
+
+        <div class="ds_pro_detail_nav">
+          <ul>
+            <li class="active"><a [routerLink]="['/user-management/users/details/' + userDetails.id]" >User Details</a></li>
+            <li ><a [routerLink]="['/user-management/corporate-users/project/list/' + userDetails.id]">Projects</a></li>
+            <li><a [routerLink]="['/user-management/corporate-users/project/follow/' + userDetails.id]">Followed Projects</a></li>
+          </ul>
+        </div>
+
+        <div class="portlet-body form bg-transparent p-3 border-0">
+          <div class="actions text-end">
+            <a routerLink="/user-management/corporate-users" class="btn btn-secondary"><i class="fa-solid fa-chevron-left"></i> Back</a>
+          </div>
+          <div class="p-3">
+            <c-row class="mb-3">
+              <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                Name
+              </label>
+              <c-col [lg]="6">
+                <input type="text" class="form-control" value="{{ userDetails.name }}" disabled/>
+              </c-col>
+            </c-row>
+            <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  DOB
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.dob }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Location
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.location }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                Contact Number
+                </label>
+                <c-col [lg]="6">
+                  <input *ngIf="userDetails.phone_code && userDetails.phone_code != ''; else elsePart" type="text" class="form-control" value="+{{userDetails.phone_code}} {{ userDetails.contact_number }}" disabled/>
+                  <ng-template #elsePart>
+                    <input type="text" class="form-control" value="{{ userDetails.contact_number }}" disabled/>
+                  </ng-template>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Email
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.email }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Corporation Name
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.corporation_name }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Industry Name
+                </label>
+                <c-col [lg]="6">
+                  <input *ngIf="userDetails.industry != 'other'" type="text" class="form-control" value="{{ userDetails.industry }}" disabled/>
+                  <input *ngIf="userDetails.industry == 'other'" type="text" class="form-control" value="{{ userDetails.other_industry }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  City
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.city }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Country
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.country }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Contact Name
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.contact_name }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Position
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.position }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  SDGs
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.sdg_name }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Category
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.category_name }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Twitter
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.twitter_value }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Facebook
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.facebook_value }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [lg]="3" class="control-label text-lg-end text-start">
+                  Linkedin
+                </label>
+                <c-col [lg]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.linkedin_value }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [sm]="3" class="control-label text-sm-end text-start">
+                  Instagram
+                </label>
+                <c-col [sm]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.instagram_value }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [sm]="3" class="control-label text-sm-end text-start">
+                  Tiktok
+                </label>
+                <c-col [sm]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.tiktok_value }}" disabled/>
+                </c-col>
+              </c-row>
+              <c-row class="mb-3">
+                <label cLabel="col" cCol [sm]="3" class="control-label text-sm-end text-start">
+                  Snapchat
+                </label>
+                <c-col [sm]="6">
+                  <input type="text" class="form-control" value="{{ userDetails.snapchat_value }}" disabled/>
+                </c-col>
+              </c-row>
+          </div>
+          <!-- <div class="form-actions footer-action border-0 fluid">
+            <div class="col-md-offset-3 col-md-9 col-sm-12 col-xs-12 frm-button">
+              <button class="btn btn-secondary" type="button" routerLink="/templates-management">
+                Back
+              </button>
+            </div>
+          </div> -->
+        </div>
+    </div>
+  </div>

@@ -1,0 +1,11 @@
+.env
+.htaccess
+.env.example
+/public/.htaccess
+/public/vendor/
+/public/uploads/admin/
+/public/uploads/user/
+/vendor/
+.idea/
+
+

@@ -1,0 +1,108 @@
+[
+    {
+        "id": 1,
+        "name": "Citizenship",
+        "description": "Service, Environmental Responsibility and Cultivating a Global Outlook",
+        "year_group": [
+            { "id": 7, "itemName": "7 Years" },
+            { "id": 8, "itemName": "8 Years" },
+            { "id": 9, "itemName": "9 Years" },
+            { "id": 10, "itemName": "10 Years" },
+            { "id": 11, "itemName": "11 Years" },
+            { "id": 12, "itemName": "12 Years" },
+            { "id": 13, "itemName": "13 Years" }
+        ],
+        "assign_skills": [
+            { "id": 1, "itemName": "Communication" },
+            { "id": 2, "itemName": "Independence" }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Performing",
+        "description": "Creativity, Performance and Imagination",
+        "year_group": [
+            { "id": 7, "itemName": "7 Years" },
+            { "id": 8, "itemName": "8 Years" },
+            { "id": 9, "itemName": "9 Years" },
+            { "id": 10, "itemName": "10 Years" },
+            { "id": 11, "itemName": "11 Years" },
+            { "id": 12, "itemName": "12 Years" },
+            { "id": 13, "itemName": "13 Years" }
+        ],
+        "assign_skills": [
+            { "id": 3, "itemName": "Creativity" },
+            { "id": 4, "itemName": "Responsibility" }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Teamwork",
+        "description": "Leadership, Collaboration, Adventure and Self-Discovery",
+        "year_group": [
+            { "id": 7, "itemName": "7 Years" },
+            { "id": 8, "itemName": "8 Years" },
+            { "id": 9, "itemName": "9 Years" },
+            { "id": 10, "itemName": "10 Years" },
+            { "id": 11, "itemName": "11 Years" },
+            { "id": 12, "itemName": "12 Years" },
+            { "id": 13, "itemName": "13 Years" }
+        ],
+        "assign_skills": [
+            { "id": 5, "itemName": "Technology" }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Academics",
+        "description": "Intellectual Curiosity and Confidence",
+        "year_group": [
+            { "id": 7, "itemName": "7 Years" },
+            { "id": 8, "itemName": "8 Years" },
+            { "id": 9, "itemName": "9 Years" },
+            { "id": 10, "itemName": "10 Years" },
+            { "id": 11, "itemName": "11 Years" },
+            { "id": 12, "itemName": "12 Years" },
+            { "id": 13, "itemName": "13 Years" }
+        ],
+        "assign_skills": [
+            { "id": 1, "itemName": "Communication" },
+            { "id": 2, "itemName": "Independence" }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Wellbeing",
+        "description": "Resilience and Self-Care, Wellbeing, Physical Health and Respect for Others",
+        "year_group": [
+            { "id": 7, "itemName": "7 Years" },
+            { "id": 8, "itemName": "8 Years" },
+            { "id": 9, "itemName": "9 Years" },
+            { "id": 10, "itemName": "10 Years" },
+            { "id": 11, "itemName": "11 Years" },
+            { "id": 12, "itemName": "12 Years" },
+            { "id": 13, "itemName": "13 Years" }
+        ],
+        "assign_skills": [
+            { "id": 3, "itemName": "Creativity" },
+            { "id": 4, "itemName": "Responsibility" }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Technology",
+        "description": "Digital and Technological Skill, Preparing for Life Beyond School",
+        "year_group": [
+            { "id": 7, "itemName": "7 Years" },
+            { "id": 8, "itemName": "8 Years" },
+            { "id": 9, "itemName": "9 Years" },
+            { "id": 10, "itemName": "10 Years" },
+            { "id": 11, "itemName": "11 Years" },
+            { "id": 12, "itemName": "12 Years" },
+            { "id": 13, "itemName": "13 Years" }
+        ],
+        "assign_skills": [
+            { "id": 5, "itemName": "Technology" }
+        ]
+    }
+]

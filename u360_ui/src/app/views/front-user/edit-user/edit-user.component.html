@@ -1,0 +1,693 @@
+<div class="ds_pro_details">
+  <div class="view-profile-main">
+    <div class="profille_view_top">
+      <strong class="profille_view_title">View Profile</strong>
+    </div>
+    <div class="row">
+
+      <div class="col-lg-3 profile_column_left">
+        <div class="profille_user_box">
+          <div class="profille_user_header">
+            <div class="profile_img">
+              <img [src]="profileImg" alt="" *ngIf="profileImg && profileImg != ''">
+              <img src="../assets/images/default-image.jpg" alt="" *ngIf="profileImg == ''">
+              <div class="profile-edit-icon">
+                <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
+                <span _ngcontent-ain-c246="" class="material-symbols-outlined">edit </span>
+              </div>
+            </div>
+            <div class="profile_text">
+              <h5>{{userData.name}}</h5>
+              <strong>{{this.sponser}}</strong>
+            </div>
+          </div>
+          <div class="profille_user_body">
+            <div class="user-info">
+              <ul>
+                <li>
+                  <span>Location</span>
+                  <strong>{{userData.location}}</strong>
+                </li>
+                <li>
+                  <span>Email</span>
+                  <strong>{{userData.email}}</strong>
+                </li>
+                <li>
+                  <span>Phone</span>
+                  <strong>{{userData.contact_number}}</strong>
+                </li>
+                <li>
+                  <span>DOB</span>
+                  <strong>{{userData.dob}}</strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-9 profile_column_right">
+        <div class="view-profile-right">
+          <div class="view_profile_tab">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="about-tab" data-bs-toggle="tab" data-bs-target="#about"
+                  type="button" role="tab" aria-controls="about" aria-selected="true">About</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="change-password-tab" data-bs-toggle="tab" data-bs-target="#change-password"
+                  type="button" role="tab" aria-controls="change-password" aria-selected="false">Change
+                  Password</button>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+                <!-- about  -->
+                <div class="about__box">
+                  <!-- header  -->
+                  <div class="profile_r_subtitle">
+                    <strong class="text">About</strong>
+                    <div class="right_btn-div" id="about-btn" [ngClass]="{ 'save-discard': isAboutEdit }">
+                      <a href="javasctipt:void(0);" class="edit_btn" (click)="editForm($event)" id="about">
+                        <span class="material-symbols-outlined">edit </span>
+                        edit</a>
+                      <ul>
+                        <li>
+                          <button class="save_btn" data-divId="about" (click)="saveForm($event)"><span
+                              class="material-symbols-sharp">save
+                            </span> Save</button>
+                        </li>
+                        <li>
+                          <a href="javasctipt:void(0);" class="discard_btn" data-divId="about" (click)="discardForm($event)"><span
+                              class="material-symbols-outlined">delete </span>Discard</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- conteint  -->
+                  <div class="main-conteint-box show_edit" id="about-content" [ngClass]="{ 'edit-show': isAboutEdit }">
+
+                    <div class="about-text-default hide-default">
+                      <p>{{userData.about}}</p>
+                    </div>
+                    <div class="about-text-edit edit-enable">
+                      <form [formGroup]="aboutEdit">
+                        <!-- <input type="hidden" formControlName="formType" value="about" > -->
+                        <textarea id="" cols="30" rows="10" class="form-control" formControlName="about" [ngClass]="{ 'is-invalid': aboutControl && aboutControl['about'].errors }" >{{userData.about}}</textarea>
+                        <div *ngIf="aboutControl && aboutControl['about'].errors" class="text-danger">
+                          <div *ngIf="isAboutSubmit && aboutControl['about'].errors['required']">About is
+                            required</div>
+                          <div *ngIf="isAboutSubmit && aboutControl['about'].errors['maxlength']">Please enter max 255 characters
+                        </div>
+                      </div>
+                      </form>
+                    </div>
+
+                  </div>
+                </div>
+                <!-- Preffered SDGs -->
+                <div class="preffered-SDGS">
+                  <!-- header  -->
+                  <div class="profile_r_subtitle">
+                    <strong class="text">Preffered SDGs</strong>
+                    <div class="right_btn-div" id="preffered-btn" [ngClass]="{ 'save-discard': isSdgEdit }">
+                      <a href="javasctipt:void(0);" class="edit_btn" data-divId="preffered" (click)="editSDGForm($event)">
+                        <span class="material-symbols-outlined" >edit </span>
+                        edit</a>
+                      <ul>
+                        <li>
+                          <button type="submit" class="save_btn" data-divId="preffered" (click)="saveSDGForm($event)"><span
+                              class="material-symbols-sharp">save
+                            </span> Save</button>
+                        </li>
+                        <li>
+                          <a href="javasctipt:void(0);" class="discard_btn" data-divId="preffered" (click)="discardSDGForm($event)"><span
+                              class="material-symbols-outlined">delete </span>Discard</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- conteint  -->
+                  <div class="main-conteint-box show_edit" id="preffered-content" [ngClass]="{ 'edit-show': isSdgEdit }">
+
+                    <div class="preffered-checkbox-default hide-default">
+                      <div class="preffered-default-row">
+                        <ng-container *ngFor="let userSdg of userData.sdg_ids; let i=index">
+                          <ng-container *ngFor="let sdg of sdgList; let i=index">
+                            <ng-container *ngIf="userSdg.sdg_id == sdg.id">
+                              <div class="preffered-default-item">
+                                <div class="preffered-default-box">
+                                  <span><img alt="" src="./assets/images/{{sdg.icon}}"></span>
+                                  <strong>{{sdg.name}}</strong>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+
+                    <div class="preffered-checkbox-edit edit-enable">
+                      <form [formGroup]="sdgDetails">
+                        <div class="preffered-edit-row">
+                          
+                            <div class="preffered-edit-item" *ngFor="let sdg of sdgOption; let i=index">
+                              <div class="form-check">
+                                <input type="checkbox" class="form-check-input" [value]="sdg.id"
+                                [checked]="sdg.selected" (change)="onCheckboxChange($event)"
+                                id="flexCheckDefault-{{sdg.id}}" style="--color:{{ sdg.icon_color }}">
+                                <label class="form-check-label" for="flexCheckDefault-{{sdg.id}}" style="--color:{{ sdg.icon_color }}">
+                                  <span>
+                                    <img alt="" src="./assets/images/{{ sdg.icon }}">
+                                  </span>
+                                  <strong>{{sdg.name}}</strong>
+                                </label>
+                              </div>
+                            </div>
+                            <div *ngIf="isSdgSubmit && sdgControl['sdg_ids'].errors" class="text-danger">
+                              <p class="error" *ngIf="sdgControl['sdg_ids'].errors['required']">
+                              SDG is required, select atleast one value.</p>
+                            </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- Preffered Project Types -->
+                <div class="preffered-project">
+                  <!-- header  -->
+                  <div class="profile_r_subtitle">
+                    <strong class="text">Preffered Project Types</strong>
+                    <div class="right_btn-div" id="preffered_project-btn" [ngClass]="{ 'save-discard': isInterestEdit }">
+                      <a href="javasctipt:void(0);" class="edit_btn" data-divId="preffered_project" (click)="editInterestForm($event)" >
+                        <span class="material-symbols-outlined">edit </span>
+                        edit</a>
+                      <ul>
+                        <li>
+                          <a href="javasctipt:void(0);" class="save_btn" data-divId="preffered_project" (click)="saveInterestForm($event)"><span
+                              class="material-symbols-sharp">save
+                            </span> Save</a>
+                        </li>
+                        <li>
+                          <a href="javasctipt:void(0);" class="discard_btn" data-divId="preffered_project" (click)="discardInterestForm($event)"><span
+                              class="material-symbols-outlined">delete </span>Discard</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- conteint  -->
+                  <div class="main-conteint-box show_edit" id="preffered_project-content" [ngClass]="{ 'edit-show': isInterestEdit }">
+
+                    <div class="preffered-pro-default hide-default">
+                      <div class="preffered-pro-row">
+                        <ng-container *ngFor="let category of interestList;" >
+                          <ng-container *ngFor="let userCat of userData.interest_ids;" >
+                            <ng-container *ngIf="userCat.interest_id == category.id">
+                              <div class="preffered-pro-item category-{{category.id}}">
+                                <div class="preffered-pro-inner">
+                                  <span *ngIf="category.name == 'Crises Relief'" class="material-symbols-sharp ng-star-inserted"> bolt</span>
+                                  <span *ngIf="category.name == 'Environmental Concerns'" class="material-symbols-sharp ng-star-inserted"> sunny</span>
+                                  <span *ngIf="category.name == 'Social Injustices'" class="material-symbols-sharp ng-star-inserted"> support</span>
+                                  <span *ngIf="category.name == 'Economic Development'" class="material-symbols-sharp ng-star-inserted"> assist_walker</span>
+                                  <strong>{{category.name}}</strong>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+
+                    <div class="preffered-pro-edit edit-enable">
+                      <form [formGroup]="interestDetails">
+                        <div class="preffered-pro-edit-row">
+                          <div *ngFor="let category of interestOption; let i=index" class="preffered-pro-edit-item">
+                            <div class="category-{{category.id}} form-check">
+                              <input type="checkbox" class="form-check-input" id="flexCheckDefaultCat-{{category.id}}" value="{{category.id}}" [checked]="category.selected" (change)="onInterestCheckboxChange($event)">
+                              <label class="form-check-label" for="flexCheckDefaultCat-{{category.id}}">
+                                <span *ngIf="category.name == 'Crises Relief'" class="material-symbols-sharp"> bolt</span>
+                                <span *ngIf="category.name == 'Environmental Concerns'" class="material-symbols-sharp"> sunny</span>
+                                <span *ngIf="category.name == 'Social Injustices'" class="material-symbols-outlined"> support</span>
+                                <span *ngIf="category.name == 'Economic Development'" class="material-symbols-sharp"> assist_walker</span>
+                                <strong>{{category.name}}</strong>
+                              </label>
+                            </div>
+                          </div>
+                          <div *ngIf="isInterestSubmit && userInterest['interest_ids'].errors" class="text-danger">
+                            <p class="error" *ngIf="userInterest['interest_ids'].errors['required']">
+                            SDG is required, select atleast one value.</p>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Social Media Usage -->
+                <div class="social-media-usage">
+                  <!-- header  -->
+                  <div class="profile_r_subtitle" >
+                    <strong class="text">Social Media Usage</strong>
+                    <div class="right_btn-div" id="social-btn" [ngClass]="{ 'save-discard': isSocialEdit }">
+                      <a href="javasctipt:void(0);" class="edit_btn" data-divId="social" (click)="editSocialForm($event)"> 
+                        <span class="material-symbols-outlined">edit </span>
+                        edit</a>
+                      <ul>
+                        <li>
+                          <a href="javasctipt:void(0);" class="save_btn" data-divId="social" (click)="saveSocialForm($event)">
+                            <span
+                              class="material-symbols-sharp" >save
+                            </span> Save</a>
+                        </li>
+                        <li>
+                          <a href="javasctipt:void(0);" class="discard_btn" data-divId="social" (click)="discardSocialForm($event)"><span
+                              class="material-symbols-outlined">delete </span>Discard</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- conteint  -->
+                  <div class="main-conteint-box show_edit" id="social-content" [ngClass]="{ 'edit-show': isSocialEdit }">
+                    <form action="" [formGroup]="socialDetails">
+                      <div class="social-colorbox-default disabled border-r-bottom-none">
+                          <div class="social-inner-item">
+                            <div class="socail-range-icon"><span><i class="fab fa-twitter"></i>Twitter</span></div>
+                            <div class="socail-range-slider">
+                              <ngx-slider [(value)]="socialDetails.value.twitter"
+                                  [options]="options"></ngx-slider>
+                              <input cFormControl type="hidden" formControlName="twitter"
+                                  [ngClass]="{ 'is-invalid': isSocialSubmit && social['twitter'].errors }" />
+                              <div *ngIf="isSocialSubmit && social['twitter'].errors"
+                                  class="text-danger">
+                                  <div *ngIf="social['twitter'].errors['required']">Twitter is
+                                      required</div>
+                              </div>
+                          </div>
+                          </div>
+
+                          <div class="social-inner-item">
+                            <div class="socail-range-icon"><span><i class="fab fa-facebook-f"></i>Facebook</span></div>
+                            <div class="socail-range-slider">
+                              <ngx-slider [(value)]="socialDetails.value.facebook"
+                                  [options]="options"></ngx-slider>
+                              <input cFormControl type="hidden" formControlName="facebook"
+                                  [ngClass]="{ 'is-invalid': isSocialSubmit && social['facebook'].errors }" />
+                              <div *ngIf="isSocialSubmit && social['facebook'].errors"
+                                  class="text-danger">
+                                  <div *ngIf="social['facebook'].errors['required']">Facebook is
+                                      required</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="social-inner-item">
+                            <div class="socail-range-icon"><span><i class="fab fa-linkedin-in"></i>Linkedin</span></div>
+                            <div class="socail-range-slider">
+                              <ngx-slider [(value)]="socialDetails.value.linkedin"
+                                  [options]="options"></ngx-slider>
+                              <input cFormControl type="hidden" formControlName="linkedin"
+                                  [ngClass]="{ 'is-invalid': isSocialSubmit && social['linkedin'].errors }" />
+                              <div *ngIf="isSocialSubmit && social['linkedin'].errors"
+                                  class="text-danger">
+                                  <div *ngIf="social['linkedin'].errors['required']">LinkedIn is
+                                      required</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="social-colorbox-default disabled border-r-top-none">
+                          <div class="social-inner-item">
+                            <div class="socail-range-icon"><span><i class="fab fa-instagram"></i>Instagram</span></div>
+                            <div class="socail-range-slider">
+                              <ngx-slider [(value)]="socialDetails.value.instagram"
+                                  [options]="options"></ngx-slider>
+                              <input cFormControl type="hidden" formControlName="instagram"
+                                  [ngClass]="{ 'is-invalid': isSocialSubmit && social['instagram'].errors }" />
+                              <div *ngIf="isSocialSubmit && social['instagram'].errors"
+                                  class="text-danger">
+                                  <div *ngIf="social['instagram'].errors['required']">Instagram is
+                                      required</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="social-inner-item">
+                            <div class="socail-range-icon"><span><i class="fab fa-tiktok"></i>Tiktok</span></div>
+                            <div class="socail-range-slider">
+                              <ngx-slider [(value)]="socialDetails.value.tiktok"
+                                  [options]="options"></ngx-slider>
+                              <input cFormControl type="hidden" formControlName="tiktok"
+                                  [ngClass]="{ 'is-invalid': isSocialSubmit && social['tiktok'].errors }" />
+                              <div *ngIf="isSocialSubmit && social['tiktok'].errors"
+                                  class="text-danger">
+                                  <div *ngIf="social['tiktok'].errors['required']">Tiktok is
+                                      required</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="social-inner-item">
+                            <div class="socail-range-icon"><span><i class="fab fa-snapchat-ghost"></i>Snapchat</span></div>
+                            <div class="socail-range-slider">
+                              <ngx-slider [(value)]="socialDetails.value.snapchat"
+                                  [options]="options"></ngx-slider>
+                              <input cFormControl type="hidden" formControlName="snapchat"
+                                  [ngClass]="{ 'is-invalid': isSocialSubmit && social['snapchat'].errors }" />
+                              <div *ngIf="isSocialSubmit && social['snapchat'].errors"
+                                  class="text-danger">
+                                  <div *ngIf="social['snapchat'].errors['required']">Snapchat is
+                                      required</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                  </div>
+                </div>
+
+                <!-- Personal Information -->
+
+                <div class="personal-information">
+                  <!-- header  -->
+                  <div class="profile_r_subtitle">
+                    <strong class="text">Personal Information</strong>
+                    <div class="right_btn-div" id="personal-btn" [ngClass]="{ 'save-discard': isPersonalEdit }">
+                      <a href="javasctipt:void(0);" class="edit_btn" data-divId="personal" (click)="editPersonalForm($event)">
+                        <span class="material-symbols-outlined">edit </span>
+                        edit</a>
+                    </div>
+                  </div>
+
+                  <!-- conteint  -->
+                  <div class="main-conteint-box show_edit" id="personal-content" [ngClass]="{ 'edit-show': isPersonalEdit }">
+                    <div class="personal-default hide-default">
+                      <ul>
+                        <li>
+                          <span>Name :</span>
+                          <p>{{userData.name}}</p>
+                        </li>
+                        <li>
+                          <span>Email :</span>
+                          <p>{{userData.email}}</p>
+                        </li>
+                        <li>
+                          <span>Contact Number :</span>
+                          <p *ngIf="userData.phone_code && userData.phone_code != ''; else elsePart">
+                            +{{userData.phone_code}} {{userData.contact_number}}
+                          </p>
+                          <ng-template #elsePart>
+                            <p>
+                              {{ userData.contact_number }}
+                            </p>
+                          </ng-template>
+                        </li>
+                        <li>
+                          <span>DOB :</span>
+                          <p>{{userData.dob}}</p>
+                        </li>
+                        <li>
+                          <span>Location :</span>
+                          <p>{{userData.location}} </p>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="personal-edit edit-enable">
+                      <div class="personal-edit-form">
+                        <form action="" [formGroup]="personalDetails">
+                          <div class="row">
+                            <div class="col-md-6 col-12">
+                              <div class="input-group">
+
+                                <input type="text" class="form-control" placeholder="Name" value="{{userData.name}}" formControlName="name">
+                                <div *ngIf="isPersonalSubmit && personal['name'].errors" class="text-danger">
+                                  <div *ngIf="personal['name'].errors['required']">Name is required
+                                  </div>
+                                  <div *ngIf="personal['name'].errors['maxlength']">Please enter max 35 characters
+                                  </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="E-mail" value="{{userData.email}}" formControlName="email" disabled="disabled">
+                                <div *ngIf="isPersonalSubmit && personal['email'].errors" class="text-danger">
+                                  <div *ngIf="personal['email'].errors['required']">Email is required</div>
+                                  <div *ngIf="personal['email'].errors && personal['email'].errors['email']">
+                                      Email is invalid</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                              <div class="input-group">
+                                <select type="text" cFormControl formControlName="phone_code" class="form-control" 
+                                [ngClass]="{ 'is-invalid': isPersonalSubmit && personal['phone_code'].errors }">
+                                    <option value="">Select code</option>
+                                    <option *ngFor="let country of countries" [value]="country.phone">
+                                        +{{country.phone}}
+                                    </option>
+                                </select>
+                                <div *ngIf="isPersonalSubmit && personal['phone_code'].errors" class="text-danger">
+                                    <div *ngIf="personal['phone_code'].errors['required']">Phone code is
+                                        required
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+                            <div class="col-md-8 col-12">
+                              <div class="input-group">
+                                <input type="number" class="form-control" placeholder="Contanct Number" value="{{userData.contact_number}}" formControlName="contact_number">
+                                <div *ngIf="isPersonalSubmit && personal['contact_number'].errors" class="text-danger">
+                                  <div *ngIf="personal['contact_number'].errors['required']">Contact Number is
+                                      required</div>
+                                  <div
+                                      *ngIf="personal['contact_number'].errors['pattern']">
+                                      Please enter minimum 10 and maximum 11 number</div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6 col-12">
+                              <div class="input-group date">
+                                <!-- <input type="text" id="dob" placeholder="Date of Birth" cformcontrol=""
+                                   ngbdatepicker="" class="form-control" formControlName="dob"> -->
+                                <input type="text" class="form-control dob" formControlName="dob"
+                                   placeholder="DD/MM/YY">
+                                <span class="input-group-append">
+                                  <span class="input-group-text calendar-icon">
+                                    <img src="./assets/images/calendar-icon.png" alt="">
+                                  </span>
+                                </span>
+                                <div *ngIf="isPersonalSubmit && personal['dob'].errors" class="text-danger">
+                                  <div *ngIf="personal['dob'].errors['required']">DOB is required</div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                              <div class="input-group">
+                                <input type="text" placeholder="Location"
+                                  class="form-control location" value="{{userData.location}}" formControlName="location">
+                                <span class="input-group-text location-icon">
+                                  <img src="./assets/images/Location-icon.png" alt="">
+                                </span>
+                                <div *ngIf="isPersonalSubmit && personal['location'].errors" class="text-danger">
+                                  <div *ngIf="personal['location'].errors['required']">Location is required
+                                  </div>
+                                  <div *ngIf="personal['location'].errors['maxlength']">Please enter max 55 characters
+                                  </div>
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="personal-edit-footer">
+                            <a href="javascript:void(0);" class="btn save_btn" data-divId="personal" (click)="savePersonalForm($event)">Save</a>
+                            <a href="javascript:void(0);" class="btn discard_btn" data-divId="personal" (click)="discardPersonalForm($event)">Discard</a>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div class="personal-information" id="personal-content" *ngIf="isCorporateUser" [ngClass]="{ 'edit-show': isCorpoEdit }">
+                  <!-- header  -->
+                  <div class="profile_r_subtitle">
+                    <strong class="text">Corporation Information</strong>
+                    <div class="right_btn-div" id="personal-btn"  [ngClass]="{ 'save-discard': isCorpoEdit }">
+                      <a href="javasctipt:void(0);" class="edit_btn" data-divId="corpo" (click)="editCorpoForm($event)">
+                        <span class="material-symbols-outlined">edit </span>
+                        edit</a>
+                    </div>
+                  </div>
+
+                  <!-- conteint  -->
+                  <div class="main-conteint-box show_edit" id="personal-content" >
+                    <div class="personal-default hide-default">
+                      <ul>
+                        <li>
+                          <span>Name of Corporation:</span>
+                          <p>{{userData.corporation_name}}</p>
+                        </li>
+                        <li>
+                          <span>Name of Industry :</span>
+                          <p *ngIf="userData.industry != 'other'; else other">{{userData.industry}}</p>
+                          <ng-template #other>
+                            <p>{{userData.other_industry}}</p>
+                          </ng-template>
+                        </li>
+                        <li>
+                          <span>City :</span>
+                          <p>{{userData.city}}</p>
+                        </li>
+                        <li>
+                          <span>Country :</span>
+                          <p>{{userData.country}} </p>
+                        </li>
+                        <li>
+                          <span>Contact Name :</span>
+                          <p>{{userData.contact_name}} </p>
+                        </li>
+                        <li>
+                          <span>Position :</span>
+                          <p>{{userData.position}} </p>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="personal-edit edit-enable">
+                      <div class="personal-edit-form">
+                        <form action="" [formGroup]="corporatDetails">
+                          <div class="row">
+                            <div class="col-md-6 col-12">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Name of Corporation" formControlName="corporation_name">
+                                <div *ngIf="isCorpoSubmit && corpo['corporation_name'].errors" class="text-danger">
+                                  <div *ngIf="corpo['corporation_name'].errors['required']">Name of Corporation is required</div>
+                                  <div *ngIf="corpo['corporation_name'].errors['maxlength']">Please enter max 100 characters
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- <div class="col-md-6 col-12">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Industry" formControlName="industry">
+                                <div *ngIf="isCorpoSubmit && corpo['industry'].errors" class="text-danger">
+                                  <div *ngIf="corpo['industry'].errors['required']">Industry is required</div>
+                                  <div *ngIf="corpo['industry'].errors['maxlength']">Please enter max 100 characters
+                                  </div>
+                                </div>
+                              </div>
+                            </div> -->
+                            <div class="col-md-6 col-12">
+                              <select formControlName="industry" 
+                                  class="form-control form-select-design cursor-pointer" cSelect (change)="checkOtherIndustry($event)">
+                                  <option selected="selected" value="">Please choose Industry</option>
+                                  <option *ngFor="let industry of industryList" [value]="industry.id">{{
+                                      industry.name }}</option>
+                                      <option value="other">Other: Please Specify</option>
+                              </select>
+                              <div *ngIf="isCorpoSubmit && corpo['industry'].errors"
+                                  class="text-danger">
+                                  <div *ngIf="corpo['industry'].errors['required']">Country is required</div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12 col-12" [hidden]="!isOtherIndustry">
+                                  <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Name of Industry" formControlName="other_industry">
+                                    <div *ngIf="isCorpoSubmit && corpo['other_industry'].errors" class="text-danger">
+                                      <div *ngIf="corpo['other_industry'].errors['required']">Industry name is required</div>
+                                      <div *ngIf="corpo['other_industry'].errors['maxlength']">Please enter max 50 characters
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                            <div class="col-md-6 col-12">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="City" formControlName="city">
+                                <div *ngIf="isCorpoSubmit && corpo['city'].errors" class="text-danger">
+                                  <div *ngIf="corpo['city'].errors['required']">City is required</div>
+                                  <div *ngIf="corpo['city'].errors['maxlength']">Please enter max 50 characters
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Country" formControlName="country">
+                                <div *ngIf="isCorpoSubmit && corpo['country'].errors" class="text-danger">
+                                  <div *ngIf="corpo['country'].errors['required']">Country is required</div>
+                                  <div *ngIf="corpo['country'].errors['maxlength']">Please enter max 50 characters
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Contanct Name" formControlName="contact_name">
+                                <div *ngIf="isCorpoSubmit && corpo['contact_name'].errors" class="text-danger">
+                                  <div *ngIf="corpo['contact_name'].errors['required']">Contact name is required</div>
+                                  <div *ngIf="corpo['contact_name'].errors['maxlength']">Please enter max 50 characters
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Position" formControlName="position">
+                                <div *ngIf="isCorpoSubmit && corpo['position'].errors" class="text-danger">
+                                  <div *ngIf="corpo['position'].errors['required']">Position is required</div>
+                                  <div *ngIf="corpo['position'].errors['maxlength']">Please enter max 30 characters
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- <div class="col-md-6 col-12">
+                              <div class="input-group date">
+                                <input type="text" id="dob" placeholder="Date of Birth" cformcontrol=""
+                                  formcontrolname="dob" ngbdatepicker="" class="form-control">
+                                <span class="input-group-append">
+                                  <span class="input-group-text calendar-icon">
+                                    <img src="./assets/images/calendar-icon.png" alt="">
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                              <div class="input-group"><input type="text" placeholder="Location"
+                                  class="form-control location "><span class="input-group-text location-icon"><img
+                                    src="./assets/images/Location-icon.png" alt=""></span></div>
+                            </div> -->
+
+                          </div>
+
+                          <div class="personal-edit-footer">
+                            <a href="javascript:void(0);" class="btn save_btn" data-divId="corpo" (click)="saveCorpoForm($event)">Save</a>
+                            <a href="javascript:void(0);" class="btn discard_btn" data-divId="corpo" (click)="discardCorpoForm($event)">Discard</a>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="tab-pane fade" id="change-password" role="tabpanel" aria-labelledby="change-password-tab">
+                <div class="change-password-main">
+                  <div class="change-password-box">
+                    <user-change-password></user-change-password>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
